@@ -1,0 +1,49 @@
+<div class="d-flex align-items-center bg-dark regLogPage">
+  <div class="logBox">
+    <app-logo></app-logo>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- <div class="form-floating mb-3 mt-3">
+        <select class="form-control" formControlName="role_id">
+          <option value="1">Admin Login</option>
+          <option value="2">Editor Login</option>
+        </select>
+        <label for="floatingInput">Role</label>
+      </div> -->
+      <div class="form-floating mb-3 mt-3">
+        <input type="text" autocomplete="" formControlName="username" class="form-control" id="floatingInput"
+          placeholder="" />
+        <label for="floatingInput">User Name</label>
+      </div>
+      @if(registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+        <small>Username is required.</small>
+      }
+      <div class="form-floating mb-3 mt-3">
+        <input class="form-control" id="email" autocomplete="off" formControlName="email" type="email" placeholder="" />
+        <label for="floatingInput">Email address</label>
+      </div>
+      @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+        <small>Please enter a valid email.</small>
+      }
+      <div class="form-floating mb-3 mt-3">
+        <input class="form-control" id="password" autocomplete="off" formControlName="password" type="password"
+          placeholder="" />
+        <label for="floatingInput">Password</label>
+      </div>
+      @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        <small>Password must be at least 6 characters long.</small>
+      }
+      <div>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
+          Register
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-3">
+      <p class="text-white m-0 text-center">
+        Have an account?<br />
+        <a href="javascript:void(0);" class="text-decoration text-white" routerLink="/login">Login here</a>
+      </p>
+    </div>
+  </div>
+</div>
