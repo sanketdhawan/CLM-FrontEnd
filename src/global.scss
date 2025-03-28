@@ -36,6 +36,10 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+
+body{
+  color: #333;
+}
   
 
 .mainContainer {
@@ -77,27 +81,4 @@
     }
   }
   
-  .regLogPage {
-    height: 100vh;
-    .logBox {
-      width: 400px;
-      padding: 0 15px;
-      margin: 0 auto;
-    }
-  }
-  .logoBox {
-    margin: 0 auto;
-    text-align: center;
-    p {
-      margin: 15px 0 0;
-      color: #fff;
-      font-size: 22px;
-      font-weight: 400;
-    }
-    svg {
-      width: 120px;
-      height: auto;
-      filter: invert(1);
-    }
-  }
-  
+

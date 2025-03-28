@@ -31,6 +31,7 @@
     "@capacitor/keyboard": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
     "@ionic/angular": "^8.4.2",
+    "base-app": "file:",
     "bootstrap": "^5.3.3",
     "gapi-script": "^1.2.0",
     "glob": "^11.0.1",

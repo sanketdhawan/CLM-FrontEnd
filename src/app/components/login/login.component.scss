@@ -39,3 +39,43 @@
         cursor: not-allowed;
     }
 }
+.leftPanelLogin{
+    width: 60%;
+}
+
+
+::ng-deep{
+.regLogPage {
+    height: 100vh;
+    width: 40%;
+    background-color: #fff;
+    .logBox {
+      width: 400px;
+      padding: 0 15px;
+      margin: 0 auto;
+    }
+  }
+
+  .logoBox {
+    margin: 0 auto;
+    text-align: center;
+    p {
+      margin: 15px 0 0;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    svg {
+      width: 120px;
+      height: auto;
+    }
+  }
+  
+}
+
+
+a.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 18px;
+    color: #888;
+}
