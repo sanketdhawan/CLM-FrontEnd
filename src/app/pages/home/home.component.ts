@@ -6,18 +6,19 @@ import {
   IonMenu,
   IonTitle,
   IonToolbar,
-  IonSplitPane
-} from '@ionic/angular/standalone';
+  IonSplitPane, IonSearchbar } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/_services/authentication.service';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { Platform } from '@ionic/angular';
+import { LoginComponent } from "../../components/login/login.component";
+import { LogoComponent } from "../../components/logo/logo.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonSearchbar, 
     RouterOutlet,
     IonContent,
     IonHeader,
@@ -25,8 +26,9 @@ import { Platform } from '@ionic/angular';
     IonTitle,
     IonToolbar,
     SidebarComponent,
-    IonSplitPane
-  ],
+    IonSplitPane,
+    LogoComponent
+],
 })
 export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router,private platform: Platform) { }
