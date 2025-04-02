@@ -1,81 +1,112 @@
-.login-with-google-btn {
-    transition: background-color .3s, box-shadow .3s;
+// --- High-Level Wrappers & Layout ---
 
-    padding: 12px 16px 12px 42px;
-    border: none;
-    border-radius: 3px;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-
-    color: #757575;
-    font-size: 14px;
-    font-weight: 500;
-
-
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: 12px 11px;
-
-    &:hover {
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+.loginWrapper {
+  margin: 2rem;
+  height: calc(100vh - 4rem);
+  display: flex;
+  gap: 2rem;
+  > div {
+    width: 100%;
+    gap: 2rem;
+    > div {
+      border-radius: 2rem;
     }
-
-    &:active {
-        background-color: #eeeeee;
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow:
-            0 -1px 0 rgba(0, 0, 0, .04),
-            0 2px 4px rgba(0, 0, 0, .25),
-            0 0 0 3px #c8dafc;
-    }
-
-    &:disabled {
-        filter: grayscale(100%);
-        background-color: #ebebeb;
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-        cursor: not-allowed;
-    }
-}
-.leftPanelLogin{
-    width: 60%;
+  }
 }
 
+.leftPanelLogin {
+  width: 50%;
+  background-color: lightblue;
+}
 
-::ng-deep{
-.regLogPage {
-    height: 100vh;
-    width: 40%;
-    background-color: #fff;
+// Password visibility toggle link (absolutely positioned)
+a.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 18px; // Adjust based on input field height
+  color: #888;
+}
+
+// --- Angular Deep Scoped Styles ---
+// Styles intended to pierce component encapsulation
+
+::ng-deep {
+  .regLogPage {
+    // Registration/Login Page container
+    width: 50%;
+    background-color: #f8f8f8;
+
     .logBox {
+      // Inner content box for login elements
       width: 400px;
       padding: 0 15px;
+      margin: 0 auto; // Center the box
+    }
+
+    .logoBox {
+      // Container for logo and potentially title
       margin: 0 auto;
+      text-align: center;
+
+      p {
+        // Title/tagline below logo
+        margin: 15px 0 0;
+        font-size: 22px;
+        font-weight: 400;
+      }
+
+      svg {
+        // Logo styling
+        width: 120px;
+        height: auto;
+      }
     }
   }
-
-  .logoBox {
-    margin: 0 auto;
-    text-align: center;
-    p {
-      margin: 15px 0 0;
-      font-size: 22px;
-      font-weight: 400;
-    }
-    svg {
-      width: 120px;
-      height: auto;
-    }
+  input[type="text"].form-control,
+  input[type="email"].form-control,
+  input[type="password"].form-control {
+    background-color: #fff;
   }
-  
-}
+  /* Remove background color */
+  input.form-control {
+    background-color: #fff; /* Or any other color you prefer */
+  }
 
+  /* Remove focus outline */
+  input.form-control:focus {
+    outline: none;
+    box-shadow: none; /* Optional: remove box-shadow as well */
+  }
 
-a.password-toggle {
-    position: absolute;
-    right: 15px;
-    top: 18px;
-    color: #888;
-}
+  /*remove the default background on disabled inputs*/
+  input.form-control:disabled {
+    background-color: #fff;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important; /* Or any other color */
+    -webkit-text-fill-color: #333 !important; /* Optional: Change text color */
+  }
+  input:-moz-autofill,
+  input:-moz-autofill:hover,
+  input:-moz-autofill:focus,
+  input:-moz-autofill:active {
+    background-color: white !important; /* Or any other color */
+    color: #333 !important; /* Optional: Change text color */
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  input:-moz-autofill,
+  input:-moz-autofill:hover,
+  input:-moz-autofill:focus,
+  input:-moz-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+    background-color: white !important;
+    color: #333 !important;
+  }
+} // End ::ng-deep
