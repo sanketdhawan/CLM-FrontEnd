@@ -1,112 +1,137 @@
-// --- High-Level Wrappers & Layout ---
 
 .loginWrapper {
   margin: 2rem;
   height: calc(100vh - 4rem);
   display: flex;
   gap: 2rem;
-  > div {
-    width: 100%;
-    gap: 2rem;
-    > div {
-      border-radius: 2rem;
-    }
-  }
+}
+
+.loginWrapper > div {
+  width: 100%;
+  gap: 2rem;
+}
+
+.regLogPage {
+  width: 50%;
+  background-color: #f8f8f8;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logBox {
+  width: 400px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logoBox img {
+  width: 250px;
+  margin-bottom: 1rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.input-icon input {
+  border-radius: 30px;
+  padding: 1rem 1rem 1rem 3rem !important;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  display: block;
+  margin-bottom: 1rem;
 }
 
 .leftPanelLogin {
   width: 50%;
-  background-color: lightblue;
+  background: linear-gradient(135deg, rgba(41, 178, 83, 0.1), rgba(41, 178, 83, 0.05));
+  border-radius: 2rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-// Password visibility toggle link (absolutely positioned)
-a.password-toggle {
-  position: absolute;
-  right: 15px;
-  top: 18px; // Adjust based on input field height
-  color: #888;
+.leftPanelContent {
+  text-align: left;
 }
 
-// --- Angular Deep Scoped Styles ---
-// Styles intended to pierce component encapsulation
+.leftPanelContent h2 {
+  color: #29B253;
+  margin-bottom: 1rem;
+}
 
-::ng-deep {
-  .regLogPage {
-    // Registration/Login Page container
-    width: 50%;
-    background-color: #f8f8f8;
+.leftPanelContent p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
 
-    .logBox {
-      // Inner content box for login elements
-      width: 400px;
-      padding: 0 15px;
-      margin: 0 auto; // Center the box
-    }
+.benefits {
+  list-style: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
 
-    .logoBox {
-      // Container for logo and potentially title
-      margin: 0 auto;
-      text-align: center;
+.benefits li {
+  margin-bottom: 0.5rem;
+}
 
-      p {
-        // Title/tagline below logo
-        margin: 15px 0 0;
-        font-size: 22px;
-        font-weight: 400;
-      }
+.releases {
+  font-size: 0.9rem;
+  color: #666;
+}
 
-      svg {
-        // Logo styling
-        width: 120px;
-        height: auto;
-      }
-    }
-  }
-  input[type="text"].form-control,
-  input[type="email"].form-control,
-  input[type="password"].form-control {
-    background-color: #fff;
-  }
-  /* Remove background color */
-  input.form-control {
-    background-color: #fff; /* Or any other color you prefer */
-  }
+/* Angular Deep Scoped Styles */
+::ng-deep input.form-control {
+  background-color: #fff;
+}
 
-  /* Remove focus outline */
-  input.form-control:focus {
-    outline: none;
-    box-shadow: none; /* Optional: remove box-shadow as well */
-  }
+::ng-deep input.form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
 
-  /*remove the default background on disabled inputs*/
-  input.form-control:disabled {
-    background-color: #fff;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important; /* Or any other color */
-    -webkit-text-fill-color: #333 !important; /* Optional: Change text color */
-  }
-  input:-moz-autofill,
-  input:-moz-autofill:hover,
-  input:-moz-autofill:focus,
-  input:-moz-autofill:active {
-    background-color: white !important; /* Or any other color */
-    color: #333 !important; /* Optional: Change text color */
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active,
-  input:-moz-autofill,
-  input:-moz-autofill:hover,
-  input:-moz-autofill:focus,
-  input:-moz-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-    -webkit-text-fill-color: #333 !important;
-    background-color: white !important;
-    color: #333 !important;
-  }
-} // End ::ng-deep
+::ng-deep input.form-control:disabled {
+  background-color: #fff;
+}
+
+::ng-deep input:-webkit-autofill,
+::ng-deep input:-webkit-autofill:hover,
+::ng-deep input:-webkit-autofill:focus,
+::ng-deep input:-webkit-autofill:active,
+::ng-deep input:-moz-autofill,
+::ng-deep input:-moz-autofill:hover,
+::ng-deep input:-moz-autofill:focus,
+::ng-deep input:-moz-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+  background-color: white !important;
+  color: #333 !important;
+}
