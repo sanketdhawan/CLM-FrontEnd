@@ -1,137 +1,95 @@
-
-.loginWrapper {
-  margin: 2rem;
-  height: calc(100vh - 4rem);
-  display: flex;
-  gap: 2rem;
-}
-
-.loginWrapper > div {
-  width: 100%;
-  gap: 2rem;
-}
-
-.regLogPage {
-  width: 50%;
-  background-color: #f8f8f8;
-  border-radius: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logBox {
-  width: 400px;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logoBox img {
-  width: 250px;
-  margin-bottom: 1rem;
-}
-
-.tagline {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
 .input-icon {
   position: relative;
+
+  i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+
+  input {
+    border-radius: 30px;
+    padding: 1rem 1rem 1rem 3rem !important;
+    font-size: 20px;
+  }
 }
 
-.input-icon i {
+small.error-message {
   position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-}
-
-.input-icon input {
-  border-radius: 30px;
-  padding: 1rem 1rem 1rem 3rem !important;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-  cursor: pointer;
-}
-
-.error-message {
+  top: 5px;
+  left: 50px;
   color: red;
   display: block;
   margin-bottom: 1rem;
 }
 
-.leftPanelLogin {
-  width: 50%;
-  background: linear-gradient(135deg, rgba(41, 178, 83, 0.1), rgba(41, 178, 83, 0.05));
-  border-radius: 2rem;
-  padding: 2rem;
+.form-control.ng-invalid.ng-touched {
+  box-shadow: 0 0 16px -8px inset red;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 65%;
+  transform: translateY(-70%);
+  color: #888;
+  cursor: pointer;
+}
+
+/* Angular Deep Scoped Styles */
+::ng-deep input.form-control {
+  background-color: #fff !important;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background-color: #fff !important;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s; // Disable transition
+    animation: none; // Disable animation
+  }
+
+  &:-moz-autofill,
+  &:-moz-autofill:hover,
+  &:-moz-autofill:focus,
+  &:-moz-autofill:active {
+    background-color: transparent !important;
+    color: #333 !important;
+    transition: background-color 5000s ease-in-out 0s; // Disable transition
+    animation: none; // Disable animation
+  }
+}
+
+.loginWrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #2f4858;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.leftPanelContent {
-  text-align: left;
-}
-
-.leftPanelContent h2 {
-  color: #29B253;
-  margin-bottom: 1rem;
-}
-
-.leftPanelContent p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.benefits {
-  list-style: disc;
-  margin-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.benefits li {
-  margin-bottom: 0.5rem;
-}
-
-.releases {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-/* Angular Deep Scoped Styles */
-::ng-deep input.form-control {
-  background-color: #fff;
-}
-
-::ng-deep input.form-control:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-::ng-deep input.form-control:disabled {
-  background-color: #fff;
-}
-
-::ng-deep input:-webkit-autofill,
-::ng-deep input:-webkit-autofill:hover,
-::ng-deep input:-webkit-autofill:focus,
-::ng-deep input:-webkit-autofill:active,
-::ng-deep input:-moz-autofill,
-::ng-deep input:-moz-autofill:hover,
-::ng-deep input:-moz-autofill:focus,
-::ng-deep input:-moz-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: #333 !important;
-  background-color: white !important;
-  color: #333 !important;
+.loginBox {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10% 10%;
+  background: #fff;
+  box-shadow: 0 0 50px -30px #000;
+  border-radius: 55px;
 }

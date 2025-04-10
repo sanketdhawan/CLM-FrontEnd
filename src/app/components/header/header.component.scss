@@ -1,0 +1,78 @@
+header {
+  padding: 0 15px;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 0 18px -10px;
+
+  .inputSearch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #ededed;
+    margin: 15px 0;
+
+    input {
+      background: transparent;
+      border: 0;
+      font-size: 16px;
+      padding: 6px;
+      outline: 0 !important;
+    }
+  }
+
+  .listIcons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      display: block;
+      line-height: 0;
+      padding: 10px;
+      border-radius: 100%;
+
+      &:hover {
+        background: #ededed;
+      }
+    }
+  }
+
+  .profileDrop {
+    position: relative;
+    a:not(.dropdown-item) {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 1;
+      gap: 10px;
+      padding: 15px 10px;
+      border-left: 1px solid #eeeeee;
+      border-right: 1px solid #eeeeee;
+      background: #f9f9f9;
+
+      div {
+        text-align: left;
+
+        span {
+          display: block;
+          font-size: 13px;
+          color: #666;
+          margin: 3px 0 0;
+        }
+      }
+    }
+  }
+
+  .bgRandom {
+    background: #ededed;
+    width: 38px;
+    height: 38px;
+    border-radius: 100%;
+    line-height: 38px;
+    text-align: center !important;
+    font-weight: 600;
+    background: #cb5b24;
+    color: #fff;
+  }
+}

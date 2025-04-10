@@ -12,13 +12,14 @@ import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { Platform } from '@ionic/angular';
 import { LoginComponent } from "../../components/login/login.component";
 import { LogoComponent } from "../../components/logo/logo.component";
+import { HeaderComponent } from "../../components/header/header.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [IonSearchbar, 
+  imports: [IonSearchbar,
     RouterOutlet,
     IonContent,
     IonHeader,
@@ -27,53 +28,8 @@ import { LogoComponent } from "../../components/logo/logo.component";
     IonToolbar,
     SidebarComponent,
     IonSplitPane,
-    LogoComponent
-],
+    LogoComponent, HeaderComponent],
 })
-export class HomeComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router,private platform: Platform) { }
-
-  logout(): void {
-    this.authService.clearToken();
-    this.router.navigate(['/login']);
-  }
-
-
-
-  // public async addNewToGallery() {
-  //   if (this.platform.is('hybrid')) {
-  //     // Use Capacitor Camera plugin for mobile devices
-  //     const capturedPhoto = await Camera.getPhoto({
-  //       resultType: CameraResultType.Uri,
-  //       source: CameraSource.Camera,
-  //       quality: 100,
-  //     });
-
-  //     this.photos.push(capturedPhoto);
-  //   } else {
-  //     // Use a fallback for web
-  //     this.addWebPhoto();
-  //   }
-  // }
-
-  // private addWebPhoto() {
-  //   const input = document.createElement('input');
-  //   input.type = 'file';
-  //   input.accept = 'image/*';
-  //   input.onchange = (event: any) => {
-  //     const file = event.target.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const webPhoto: Photo = {
-  //         webPath: reader.result as string,
-  //         format: 'jpeg',
-  //       };
-  //       this.photos.push(webPhoto);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   };
-  //   input.click();
-  // }
-
-  ngOnInit() { }
+export class HomeComponent {
+  
 }

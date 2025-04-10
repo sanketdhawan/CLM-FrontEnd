@@ -8,11 +8,12 @@ import { Router } from '@angular/router'; // Import Router
     providedIn: 'root',
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:8080/api/auth'; // Adjust as needed
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+    private userInfoSubject = new BehaviorSubject<any>(null);
 
     constructor(private http: HttpClient, private router: Router) {
         this.isAuthenticatedSubject.next(!!this.getToken()); // Initialize auth state
+        this.loadUserInfoFromStorage();
     }
 
     setToken(token: string): void {
@@ -51,4 +52,28 @@ export class AuthService {
         this.isAuthenticatedSubject.next(true);
         this.router.navigate(['/']); // Redirect to home after login
     }
+    getUserInfo$(): Observable<any> {
+        return this.userInfoSubject.asObservable(); // For header to subscribe
+    }
+
+
+    setUserInfo(userDetails: any): void {
+        localStorage.setItem('userInfo', JSON.stringify(userDetails)); // Store in localStorage
+        this.userInfoSubject.next(userDetails);
+    }
+
+    private loadUserInfoFromStorage(): void {
+        const storedUserInfo = localStorage.getItem('userInfo');
+        if (storedUserInfo) {
+            try {
+                const parsedUserInfo = JSON.parse(storedUserInfo);
+                this.userInfoSubject.next(parsedUserInfo);
+            } catch (error) {
+                console.error('Error parsing stored user info:', error);
+                localStorage.removeItem('userInfo'); // Clear if parsing fails
+                this.userInfoSubject.next(null);
+            }
+        }
+    }
+
 }

@@ -1,11 +1,20 @@
 ion-split-pane {
-    --side-width: 250px;
-    --side-max-width: 250px;
+  --side-width: 250px;
+  --side-max-width: 250px;
 }
 
-
-.topSearch {
-    .searchbar-input {
-        box-shadow: none !important;
+section{
+    padding: 15px;
+}
+::ng-deep {
+  ion-menu {
+    .logoBox {
+      margin: 0 !important;
+      padding: 20px 0;
+      border-bottom: 1px solid #233b4b;
+      img {
+        height: 45px;
+      }
     }
+  }
 }

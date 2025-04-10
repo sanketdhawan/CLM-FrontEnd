@@ -20,11 +20,6 @@ export class SidebarComponent {
 
   public appPages = [
     { title: 'Dashboard', url: '', icon: 'aperture-outline' },
-    { title: 'Our Services', url: 'our-services', icon: 'aperture-outline' },
-
-    // { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    // { title: 'Our Services', url: 'our-services', icon: 'aperture-outline' },
   ];
 }

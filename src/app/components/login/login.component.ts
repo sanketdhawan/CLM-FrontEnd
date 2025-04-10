@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.globalLoaderService.hideLoader();
         console.log('Backend Response:', response);
-
+        this.authService.setUserInfo(response);
         if (response.code === '00') {
           this.globalAlertService.setMessage('Login successful!', 'success');
           this.loginForm.reset();
@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
           if (token) {
             this.authService.setToken(token);
             this.authService.postLoginActions();
+            
           } else {
             this.globalAlertService.setMessage(response.message || 'Invalid email or password.', 'danger');
           }

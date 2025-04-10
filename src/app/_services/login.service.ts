@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LoginService {
-    private apiUrl = 'http://147.93.29.157:8081/clm/v1/user'; // Corrected URL
+    private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
 
     constructor(private http: HttpClient) {}
 

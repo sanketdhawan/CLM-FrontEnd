@@ -1,27 +1,15 @@
 <ion-split-pane when="sm" contentId="main">
-  <ion-menu contentId="main">
+  <ion-menu class="leftMenu" contentId="main">
     <app-logo />
     <ion-content>
       <app-sidebar></app-sidebar>
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" id="main">
-    <ion-header>
-      <ion-toolbar>
-        <div class="row">
-          <div class="col-2">
-            <ion-searchbar animated="true" placeholder="Search Anything..." class="topSearch"></ion-searchbar>
-          </div>
-          <div class="col">
-
-          </div>
-        </div>
-
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
+  <div id="main">
+   <app-header />
+    <section>
       <router-outlet></router-outlet>
-    </ion-content>
+    </section>
   </div>
 </ion-split-pane>
