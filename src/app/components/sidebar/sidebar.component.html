@@ -1,13 +1,17 @@
-@for (p of appPages; track p; let i = $index) {
-<ion-item
-  href="javascript:void(0);"
-  routerDirection="root"
-  [routerLink]="[p.url]"
-  lines="none"
-  detail="false"
-  routerLinkActive="selected"
->
-  <ion-icon class="me-2" [name]="p.icon"></ion-icon>
-  <ion-label>{{ p.title }}</ion-label>
-</ion-item>
-}
+<ul>
+  @for (p of appPages; track p; let i = $index) {
+  <li>
+    <a
+      href="javascript:void(0);"
+      routerDirection="root"
+      [routerLink]="[p.url]"
+      routerLinkActive="selected"
+    >
+      <span class="material-symbols-outlined">
+        {{ p.icon }}
+      </span>
+      <strong>{{ p.title }}</strong>
+    </a>
+  </li>
+  }
+</ul>

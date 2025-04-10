@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonIcon, IonLabel, IonItem } from '@ionic/angular/standalone';
 import { AuthService } from '../../_services/authentication.service';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +12,9 @@ import { AuthService } from '../../_services/authentication.service';
   imports: [RouterLink, IonIcon, IonLabel, IonItem],
 })
 export class SidebarComponent {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+    addIcons({});
+  }
 
   logout(): void {
     this.authService.clearToken();
@@ -19,7 +22,7 @@ export class SidebarComponent {
   }
 
   public appPages = [
-    { title: 'Dashboard', url: '', icon: 'aperture-outline' },
+    { title: 'Dashboard', url: '', icon: 'home' },
     // { title: 'Our Services', url: 'our-services', icon: 'aperture-outline' },
   ];
 }

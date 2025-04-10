@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(loginData).subscribe({
       next: (response) => {
         this.globalLoaderService.hideLoader();
-        console.log('Backend Response:', response);
+        // console.log('Backend Response:', response);
         this.authService.setUserInfo(response);
         if (response.code === '00') {
           this.globalAlertService.setMessage('Login successful!', 'success');

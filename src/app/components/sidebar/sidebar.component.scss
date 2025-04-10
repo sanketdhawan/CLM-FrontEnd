@@ -1,0 +1,21 @@
+ul{
+    margin: 15px 0;
+    padding: 0;
+    list-style: none;
+    li{
+        a{
+            font-size: 18px;
+            font-weight:500;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 15px;
+            strong{
+                font-weight: inherit;
+            }
+        }
+    }
+}

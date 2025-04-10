@@ -21,7 +21,7 @@ export class HeaderComponent {
       .getUserInfo$()
       .subscribe((data) => {
         this.userData = data; // Now you have it!
-        console.log('DashboardComponent: User Data:', this.userData);
+        // console.log('DashboardComponent: User Data:', this.userData);
       });
   }
 
