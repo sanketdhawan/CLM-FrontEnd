@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../../_services/login.service';
 import { AuthService } from '../../_services/authentication.service';
 import { GlobalAlertService } from '../../_services/global-alert.service';
 import { GlobalLoaderService } from '../../_services/global-loader.service';
-import { LogoComponent } from '../logo/logo.component';
+import { LogoComponent } from "../logo/logo.component";
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [LogoComponent, ReactiveFormsModule,CommonModule],
+  imports: [LogoComponent,CommonModule,ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   showPassword = false;
+  forgotPasswordMode = false; // Controls form toggle
 
   constructor(
     private fb: FormBuilder,
@@ -26,65 +26,85 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private globalAlertService: GlobalAlertService,
-    private globalLoaderService: GlobalLoaderService,
-    private platform: Platform
+    private globalLoaderService: GlobalLoaderService
   ) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
+  toggleForgotPassword(): void {
+    this.forgotPasswordMode = !this.forgotPasswordMode;
+  }
+
   onSubmit(): void {
-    console.log('Login form submitted');
     if (this.loginForm.invalid) {
       this.globalAlertService.setMessage('Please fill out the form correctly.', 'danger');
       return;
     }
 
-    const formData = this.loginForm.value;
     this.globalLoaderService.showLoader();
-
     const loginData = {
-      userid: formData.identifier,
-      password: formData.password,
-      requestInit: new Date().toISOString()
+      userid: this.loginForm.value.identifier,
+      password: this.loginForm.value.password,
+      requestInit: new Date().toISOString(),
     };
 
     this.loginService.loginUser(loginData).subscribe({
       next: (response) => {
         this.globalLoaderService.hideLoader();
-        // console.log('Backend Response:', response);
-        this.authService.setUserInfo(response);
         if (response.code === '00') {
           this.globalAlertService.setMessage('Login successful!', 'success');
-          this.loginForm.reset();
-
-          const token = response.token;
-          if (token) {
-            this.authService.setToken(token);
+          this.authService.setUserInfo(response);
+          if (response.token) {
+            this.authService.setToken(response.token);
             this.authService.postLoginActions();
-            
           } else {
-            this.globalAlertService.setMessage(response.message || 'Invalid email or password.', 'danger');
+            this.globalAlertService.setMessage(response.message || 'Invalid credentials.', 'danger');
           }
         } else {
-          this.globalAlertService.setMessage(response.message || 'Invalid email or password.', 'danger');
+          this.globalAlertService.setMessage(response.message || 'Invalid credentials.', 'danger');
           this.authService.clearToken();
         }
       },
       error: (error) => {
         this.globalLoaderService.hideLoader();
-        console.error('Error during login:', error);
-        this.globalAlertService.setMessage('An error occurred. Please try again later.', 'danger');
+        this.globalAlertService.setMessage('An error occurred. Please try again.', 'danger');
         this.authService.clearToken();
+      },
+    });
+  }
+
+  submitForgotPassword(): void {
+    if (this.forgotPasswordForm.invalid) {
+      this.globalAlertService.setMessage('Please enter a valid email.', 'danger');
+      return;
+    }
+
+    this.globalLoaderService.showLoader();
+    this.loginService.forgotPassword({ email: this.forgotPasswordForm.value.email }).subscribe({
+      next: (response) => {
+        this.globalLoaderService.hideLoader();
+        if (response.code === '00') {
+          this.globalAlertService.setMessage('Password reset link sent!', 'success');
+        } else {
+          this.globalAlertService.setMessage(response.message || 'Could not send reset link.', 'danger');
+        }
+      },
+      error: (error) => {
+        this.globalLoaderService.hideLoader();
+        this.globalAlertService.setMessage('An error occurred. Please try again.', 'danger');
       },
     });
   }

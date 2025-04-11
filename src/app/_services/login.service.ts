@@ -7,8 +7,9 @@ import {environment} from '../../environments/environment';
     providedIn: 'root',
 })
 export class LoginService {
-    private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
+    // private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
 
+    private apiUrl = "https://147.93.29.157/api";
     constructor(private http: HttpClient) {}
 
     loginUser(userData: any): Observable<any> { // Change userData type to any
@@ -20,7 +21,7 @@ export class LoginService {
     }
 
     forgotPassword(email: { email: string }): Observable<any> {
-        return this.http.post<any>(this.apiUrl, { action: 'forgot_password', email: email.email });
+        return this.http.post<any>(this.apiUrl, { action: 'forgot-password', email: email.email });
     }
 
     resetPassword(token: string, newPassword: string): Observable<any> {

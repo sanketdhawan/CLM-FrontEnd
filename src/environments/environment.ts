@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // endpoint: 'http://localhost:8080/',
-  endpoint: 'http://147.93.29.157:8081/',
+  endpoint: 'http://localhost:8080/',
+  // endpoint: 'http://147.93.29.157:8081/',
 };
 
 /*
