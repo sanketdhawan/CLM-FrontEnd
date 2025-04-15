@@ -1,10 +1,17 @@
 <header>
   <div class="row">
-    <div class="col-2">
-      <div class="inputSearch">
+    <div class="col">
+      <div class="btnSearch">
+        <ion-menu-toggle>
+        <span class="material-symbols-outlined">
+          menu
+          </span>
+        </ion-menu-toggle>
+      </div>
+      <!-- <div class="inputSearch">
         <span class="material-symbols-outlined"> search </span>
         <input type="text" placeholder="Search Something..." />
-      </div>
+      </div> -->
     </div>
     <div class="col text-end">
       <div class="d-flex justify-content-end align-items-center gap-3">
@@ -37,25 +44,25 @@
           </div>
           <a href="javascript:void(0);" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> account_circle </span> 
-            <span class="align-middle">My Account</span>
+            <span class="align-middle">My Profile</span>
           </a>
           <a href="/osen-angular/dashboards/wallet" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> account_balance_wallet </span> 
             <span class="align-middle">Wallet : <span class="fw-semibold">$985.25</span></span>
           </a>
-          <a href="javascript:void(0);" class="dropdown-item">
+          <!-- <a href="javascript:void(0);" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> settings </span> 
             <span class="align-middle">Settings</span>
           </a>
           <a href="javascript:void(0);" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> support_agent </span> 
             <span class="align-middle">Support</span>
-          </a>
+          </a> -->
           <div class="dropdown-divider"></div>
-          <a href="/auth/lock-screen" class="dropdown-item">
+          <!-- <a href="/auth/lock-screen" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> lock </span> 
             <span class="align-middle">Lock Screen</span>
-          </a>
+          </a> -->
           <a href="javascript:void(0);" (click)="logout()" class="dropdown-item fw-semibold text-danger">
             <span class="material-symbols-outlined me-1 align-middle"> logout </span> 
             <span class="align-middle">Sign Out</span>

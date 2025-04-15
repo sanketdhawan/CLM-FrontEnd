@@ -7,9 +7,9 @@ import {environment} from '../../environments/environment';
     providedIn: 'root',
 })
 export class LoginService {
-    // private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
+    private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
 
-    private apiUrl = "https://147.93.29.157/api";
+    // private apiUrl = "https://147.93.29.157/api";
     constructor(private http: HttpClient) {}
 
     loginUser(userData: any): Observable<any> { // Change userData type to any

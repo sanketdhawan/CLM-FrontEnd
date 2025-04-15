@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [LogoComponent,CommonModule,ReactiveFormsModule],
+  imports: [LogoComponent, CommonModule, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;

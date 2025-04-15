@@ -4,7 +4,9 @@ ion-split-pane {
 }
 
 section{
-    padding: 15px;
+  padding: 20px 15px;
+  height: calc(100vh - 69px);
+  overflow: auto;
 }
 ::ng-deep {
   ion-menu {

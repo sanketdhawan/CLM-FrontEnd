@@ -9,7 +9,7 @@ import { addIcons } from 'ionicons';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [RouterLink, IonIcon, IonLabel, IonItem],
+  imports: [RouterLink],
 })
 export class SidebarComponent {
   constructor(private authService: AuthService, private router: Router) {

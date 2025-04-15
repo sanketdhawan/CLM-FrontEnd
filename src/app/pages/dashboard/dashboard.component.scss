@@ -1,0 +1,65 @@
+.dashboard-stats {
+    /* Overall layout */
+  }
+  
+  .dashboard-stats__item {
+    /* Spacing between items */
+  }
+  
+  .dashboard-stats__title {
+    font-size: 1.2rem;
+    color: #6c757d; /* Example muted color */
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboard-stats__data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboard-stats__icon {
+    /* Size and shape of icon container */
+  }
+  
+  .dashboard-stats__avatar {
+    background-color: #0d6efd; /* Example primary color */
+    color: white;
+    border-radius: 50%;
+    width: 2.5rem;  /* Adjust size */
+    height: 2.5rem; /* Adjust size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dashboard-stats__value {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .dashboard-stats__change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+  
+  .change-indicator {
+    /* Style the up/down arrow icons */
+  }
+  
+  .change-up {
+    color: green;
+  }
+  
+  .change-down {
+    color: red;
+  }
+  
+  .change-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }

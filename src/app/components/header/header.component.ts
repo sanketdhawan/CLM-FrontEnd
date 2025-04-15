@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonMenuToggle } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/_services/authentication.service';
 
@@ -7,9 +8,11 @@ import { AuthService } from 'src/app/_services/authentication.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [IonMenuToggle]
 })
 export class HeaderComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
   randomColor: string = '#000000';
   userInfoSubscription: Subscription | undefined;
   userData: any;

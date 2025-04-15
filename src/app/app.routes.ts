@@ -3,7 +3,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ReverseAuthGuard } from './_guards/reverse_auth.guard';
 import { AuthGuard } from './_guards/auth.guard';
-import { OurServicesComponent } from './pages/our-services/our-services.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
@@ -19,11 +18,11 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivate: [AuthGuard],
         children: [
-            {
-                path: 'our-services',
-                component: OurServicesComponent,
-                canActivate: [AuthGuard],
-            },
+            // {
+            //     path: 'our-services',
+            //     component: OurServicesComponent,
+            //     canActivate: [AuthGuard],
+            // },
             {
                 path: '',
                 component: DashboardComponent,
