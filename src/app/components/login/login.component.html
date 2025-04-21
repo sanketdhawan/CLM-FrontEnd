@@ -53,10 +53,10 @@
               <form [formGroup]="forgotPasswordForm" (ngSubmit)="submitForgotPassword()" autocomplete="off">
                 <div class="mb-3 mt-3 input-icon">
                   <i class="material-symbols-outlined">email</i>
-                  <input type="email" formControlName="email" autocomplete="email" class="form-control" id="forgotEmail"
+                  <input type="text" formControlName="email" autocomplete="email" class="form-control" id="forgotEmail"
                     placeholder="Enter your username" />
                   <small
-                    *ngIf="forgotPasswordForm.controls['email'].invalid && forgotPasswordForm.controls['email'].touched"
+                    *ngIf="forgotPasswordForm.controls['email'].touched"
                     class="error-message">Please enter a valid username.</small>
                 </div>
 
