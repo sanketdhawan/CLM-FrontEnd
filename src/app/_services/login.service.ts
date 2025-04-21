@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
 
@@ -7,13 +7,16 @@ import {environment} from '../../environments/environment';
     providedIn: 'root',
 })
 export class LoginService {
-    private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
-
-    // private apiUrl = "https://147.93.29.157/api";
+    // private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
+    // https://api.auctapace.com/clm/v1/user/login
+    private apiUrl = "https://api.auctapace.com/clm/v1/user";
     constructor(private http: HttpClient) {}
 
     loginUser(userData: any): Observable<any> { // Change userData type to any
-        return this.http.post<any>(`${this.apiUrl}/login`, userData); // Corrected endpoint
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+        });
+        return this.http.post<any>(`${this.apiUrl}/login`, userData, { headers, withCredentials: false }); // Corrected endpoint
     }
 
     verifyGoogleToken(googleToken: string): Observable<any> {
