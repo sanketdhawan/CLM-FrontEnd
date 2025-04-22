@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../_services/login.service';
 import { AuthService } from '../../_services/authentication.service';
 import { GlobalAlertService } from '../../_services/global-alert.service';
 import { GlobalLoaderService } from '../../_services/global-loader.service';
-import { LogoComponent } from "../logo/logo.component";
+import { LogoComponent } from '../logo/logo.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -34,11 +39,17 @@ export class LoginComponent implements OnInit {
     });
 
     this.forgotPasswordForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      identifier: ['', [Validators.required]],
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
+
+
+  togglePasswordVisibility(state: boolean): void {
+    this.showPassword = state;
+  }
+  
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -50,7 +61,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.globalAlertService.setMessage('Please fill out the form correctly.', 'danger');
+      this.globalAlertService.setMessage(
+        'Please fill out the form correctly.',
+        'danger'
+      );
       return;
     }
 
@@ -60,6 +74,8 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
       requestInit: new Date().toISOString(),
     };
+
+    console.log(loginData)
 
     this.loginService.loginUser(loginData).subscribe({
       next: (response) => {
@@ -71,40 +87,61 @@ export class LoginComponent implements OnInit {
             this.authService.setToken(response.token);
             this.authService.postLoginActions();
           } else {
-            this.globalAlertService.setMessage(response.message || 'Invalid credentials.', 'danger');
+            this.globalAlertService.setMessage(
+              response.message || 'Invalid credentials.',
+              'danger'
+            );
           }
         } else {
-          this.globalAlertService.setMessage(response.message || 'Invalid credentials.', 'danger');
+          this.globalAlertService.setMessage(
+            response.message || 'Invalid credentials.',
+            'danger'
+          );
           this.authService.clearToken();
         }
       },
       error: (error) => {
         this.globalLoaderService.hideLoader();
-        this.globalAlertService.setMessage('An error occurred. Please try again.', 'danger');
+        this.globalAlertService.setMessage(
+          'An error occurred. Please try again.',
+          'danger'
+        );
         this.authService.clearToken();
       },
     });
   }
 
   submitForgotPassword(): void {
-    if (this.forgotPasswordForm.invalid) {
-      this.globalAlertService.setMessage('Please enter a valid email.', 'danger');
-      return;
-    }
-
     this.globalLoaderService.showLoader();
-    this.loginService.forgotPassword({ email: this.forgotPasswordForm.value.email }).subscribe({
+
+    const loginData = {
+      userid: this.forgotPasswordForm.value.identifier,
+      requestInit: new Date().toISOString(),
+    };
+
+    this.loginService.forgotPassword(loginData).subscribe({
       next: (response) => {
         this.globalLoaderService.hideLoader();
         if (response.code === '00') {
-          this.globalAlertService.setMessage('Password reset link sent!', 'success');
+          this.globalAlertService.setMessage(
+            'Password reset link sent!',
+            'success'
+          );
+          this.forgotPasswordMode = false;
         } else {
-          this.globalAlertService.setMessage(response.message || 'Could not send reset link.', 'danger');
+          this.globalAlertService.setMessage(
+            response.message || 'Could not send reset link.',
+            'danger'
+          );
         }
       },
       error: (error) => {
+        console.log(error)
         this.globalLoaderService.hideLoader();
-        this.globalAlertService.setMessage('An error occurred. Please try again.', 'danger');
+        this.globalAlertService.setMessage(
+          'An error occurred. Please try again.',
+          'danger'
+        );
       },
     });
   }

@@ -16,9 +16,6 @@
   }
 }
 
-
-
-
 small.error-message {
   position: absolute;
   top: 5px;
@@ -119,7 +116,9 @@ small.error-message {
       margin: 0 0 10px;
       padding: 0 0 10px;
     }
-    strong{display: block;}
+    strong {
+      display: block;
+    }
   }
 }
 
@@ -134,20 +133,54 @@ small.error-message {
   overflow: hidden;
 }
 
-.logBox{
-  h4{
+.logBox {
+  h4 {
     font-size: 25px;
     text-align: center;
     margin: 0 0 30px;
-    div{
+    div {
       margin: 0 0 15px;
       display: inline-block;
       border-bottom: 3px solid #78de00;
       padding: 0 0 10px;
     }
-    p{
+    p {
       font-size: 17px;
       color: #333;
     }
   }
+}
+
+@media screen and (max-width: 640px) {
+  .d-flex.iamWrap {
+    display: block !important;
+  }
+
+  .loginWrapper {
+    display: block !important;
+    overflow: auto;
+  }
+
+  .loginBox,.rightSidePanel {
+    width: auto !important;
+  }
+  .rightSidePanel div {
+    position: relative !important;
+    padding: 0px 30px 0 !important;
+    margin: 0 0 -10px;
+    font-size: 30px !important;
+}
+
+.rightSidePanel {
+    background: #b3e1ee;
+}
+
+.rightSidePanel div span {
+    font-size: 26px !important;
+}
+
+
+.loginWrapper {
+    padding: 20px;
+}
 }

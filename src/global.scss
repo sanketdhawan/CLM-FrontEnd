@@ -8,7 +8,7 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
-
+ @use "sass:color";
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -24,6 +24,8 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
 
 /**
  * Ionic Dark Mode
@@ -41,7 +43,9 @@
 }
 
 $mainColor: #78de00;
-*{font-family: "Nunito", sans-serif;}
+* {
+  font-family: "Nunito", sans-serif;
+}
 body {
   color: #333;
   background-color: #fff;
@@ -56,9 +60,9 @@ input {
   background-color: $mainColor;
   border-color: $mainColor;
   color: #000;
-  &:hover{
-    background-color: darken($color: $mainColor, $amount: 5);
-    border-color: darken($color: $mainColor, $amount: 2);
+  &:hover {
+    background-color: color.scale($mainColor, $lightness: -4.6%);
+    border-color: color.scale($mainColor, $lightness: -4.6%);
     color: #000;
   }
   &.btn-login {
@@ -89,15 +93,9 @@ ion-split-pane {
   }
 }
 
-
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 300,
-  'GRAD' 200,
-  'opsz' 48
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 200, "opsz" 48;
 }
-
 
 .mainContainer {
   padding: 15px;

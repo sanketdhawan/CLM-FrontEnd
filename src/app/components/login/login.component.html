@@ -18,18 +18,24 @@
                 <div class="mb-3 mt-3 input-icon">
                   <i class="material-symbols-outlined">person_outline</i>
                   <input type="text" formControlName="identifier" autocomplete="identifier" class="form-control"
-                    id="floatingInput" placeholder="Enter username or email" />
+                    id="floatingInput" placeholder="Enter User Name" />
                   <small *ngIf="loginForm.controls['identifier'].invalid && loginForm.controls['identifier'].touched"
-                    class="error-message">Please enter a valid username or email.</small>
+                    class="error-message">Please enter a valid User Name.</small>
                 </div>
 
                 <div class="mb-3 input-icon">
                   <i class="material-symbols-outlined">lock_outline</i>
                   <input [type]="showPassword ? 'text' : 'password'" formControlName="password" autocomplete="password"
                     class="form-control" id="floatingPassword" placeholder="Password" />
-                  <a href="javascript:void(0);" class="password-toggle" (click)="togglePassword()">
-                    <span class="material-symbols-outlined">{{ showPassword ? "visibility_off" : "visibility" }}</span>
-                  </a>
+                    <a href="javascript:void(0);" class="password-toggle"
+                    (mousedown)="togglePasswordVisibility(true)"
+                    (mouseup)="togglePasswordVisibility(false)"
+                    (mouseleave)="togglePasswordVisibility(false)">
+                    <span class="material-symbols-outlined">
+                        {{ showPassword ? "visibility_off" : "visibility" }}
+                    </span>
+                 </a>
+                 
                   <small *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched"
                     class="error-message">Password is required.</small>
                 </div>
@@ -52,12 +58,9 @@
             <div *ngIf="forgotPasswordMode">
               <form [formGroup]="forgotPasswordForm" (ngSubmit)="submitForgotPassword()" autocomplete="off">
                 <div class="mb-3 mt-3 input-icon">
-                  <i class="material-symbols-outlined">email</i>
-                  <input type="text" formControlName="email" autocomplete="email" class="form-control" id="forgotEmail"
-                    placeholder="Enter your username" />
-                  <small
-                    *ngIf="forgotPasswordForm.controls['email'].touched"
-                    class="error-message">Please enter a valid username.</small>
+                  <i class="material-symbols-outlined">person_outline</i>
+                  <input type="text" formControlName="identifier" autocomplete="email" class="form-control" id="forgotEmail"
+                    placeholder="Enter User Name" />
                 </div>
 
                 <div class="text-center">
