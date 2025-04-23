@@ -18,4 +18,8 @@ export class LoginService {
   forgotPassword(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/forgot-password`, userData);
   }
+
+  updatePassword(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update-password`, userData);
+  }
 }

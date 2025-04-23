@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonMenuToggle } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { AuthService } from 'src/app/_services/authentication.service';
+import { UpdatePasswordComponent } from 'src/app/pages/update-password/update-password.component';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +34,14 @@ export class HeaderComponent {
   ngOnDestroy(): void {
     this.userInfoSubscription?.unsubscribe();
   }
+
+
+  private modalService = inject(NgbModal);
+
+	updatePasswordModel() {
+		const modalRef = this.modalService.open(UpdatePasswordComponent, { centered: true });
+		modalRef.componentInstance.userData = this.userData;
+	}
 
   generateDarkColor(): string {
     const hue = Math.floor(Math.random() * 360);
