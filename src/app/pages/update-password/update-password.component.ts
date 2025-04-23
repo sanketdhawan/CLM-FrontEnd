@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -38,7 +38,7 @@ export class UpdatePasswordComponent {
     
     if (this.userData) {
       this.updatePasswordForm.patchValue({
-        identifier: this.userData.userid
+        identifier: this.userData.firstName + ' ' +  this.userData.lastName
       });
     }
   }
@@ -49,7 +49,7 @@ export class UpdatePasswordComponent {
     this.globalLoaderService.showLoader();
 
     const passwordData = {
-      userid: this.updatePasswordForm.value.identifier,
+      userid: this.userData.userid,
       oldPassword: this.updatePasswordForm.value.oldPassword,
       newPassword: this.updatePasswordForm.value.newPassword,
       requestInit: new Date().toISOString(),
