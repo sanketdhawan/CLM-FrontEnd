@@ -35,11 +35,10 @@ export class UpdatePasswordComponent {
   }
 
   ngOnInit(): void {
-    // console.log('User Data:', this.userData); // ✅ Check if data is received
-
+    
     if (this.userData) {
       this.updatePasswordForm.patchValue({
-        identifier: `sanketdhavan`
+        identifier: this.userData.userid
       });
     }
   }
