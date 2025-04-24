@@ -22,4 +22,5 @@ export class LoginService {
   updatePassword(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/update-password`, userData);
   }
+  
 }

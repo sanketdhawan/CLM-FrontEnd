@@ -8,7 +8,7 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
- @use "sass:color";
+@use "sass:color";
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -43,28 +43,34 @@
 }
 
 $mainColor: #78de00;
+
 * {
   font-family: "Nunito", sans-serif;
 }
+
 body {
   color: #333;
   background-color: #fff;
   font-size: 16px;
 }
+
 input {
   font-size: 1.2rem;
   font-family: "Nunito", sans-serif !important;
 }
+
 .btn {
   border-radius: 60px;
   background-color: $mainColor;
   border-color: $mainColor;
   color: #000;
+
   &:hover {
     background-color: color.scale($mainColor, $lightness: -4.6%);
     border-color: color.scale($mainColor, $lightness: -4.6%);
     color: #000;
   }
+
   &.btn-login {
     font-size: 20px !important;
     padding: 10px 0;
@@ -74,17 +80,22 @@ input {
 
 ion-split-pane {
   --border: none !important;
+
   ion-menu {
     --background: var(--ion-color-primary) !important;
+
     ion-content {
       --background: var(--ion-color-primary) !important;
+
       ion-list-header {
         --background: var(--ion-color-primary) !important;
         --color: #ffffff !important;
       }
+
       ion-item {
         --background: var(--ion-color-primary) !important;
         --color: #ffffff !important;
+
         ion-icon {
           padding-right: 10px !important;
         }
@@ -101,9 +112,10 @@ ion-split-pane {
   padding: 15px;
 }
 
-.form-floating > label {
+.form-floating>label {
   color: #333;
 }
+
 .loader-overlay {
   position: fixed;
   top: 0;
@@ -115,6 +127,14 @@ ion-split-pane {
   align-items: center;
   justify-content: center;
   z-index: 99999;
+}
+
+.main-title {
+  margin: 0 0 10px;
+}
+
+.menu-content {
+  overflow: hidden;
 }
 
 .alert {

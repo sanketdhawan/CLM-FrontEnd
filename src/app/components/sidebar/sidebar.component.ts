@@ -23,6 +23,7 @@ export class SidebarComponent {
 
   public appPages = [
     { title: 'Dashboard', url: '', icon: 'home' },
+    { title: 'Contracts', url: 'contracts', icon: 'newspaper' },
     // { title: 'Our Services', url: 'our-services', icon: 'aperture-outline' },
   ];
 }

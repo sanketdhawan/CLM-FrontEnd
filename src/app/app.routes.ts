@@ -6,6 +6,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ContractsComponent } from './pages/contracts/contracts.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard] },
@@ -22,6 +23,11 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'contracts',
+                component: ContractsComponent,
                 canActivate: [AuthGuard],
             },
             {
