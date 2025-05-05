@@ -78,7 +78,7 @@ export class UpdatePasswordComponent implements OnInit {
     ngOnInit(): void {
         if (this.userData) {
             this.updatePasswordForm.patchValue({
-                identifier: this.userData.firstName + ' ' + this.userData.lastName
+                identifier: this.userData.userid
             });
         }
     }
