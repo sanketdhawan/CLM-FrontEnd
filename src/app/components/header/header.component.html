@@ -3,9 +3,7 @@
     <div class="col">
       <div class="btnSearch">
         <ion-menu-toggle>
-        <span class="material-symbols-outlined">
-          menu
-          </span>
+          <span class="material-symbols-outlined"> menu </span>
         </ion-menu-toggle>
       </div>
       <!-- <div class="inputSearch">
@@ -15,46 +13,75 @@
     </div>
     <div class="col text-end">
       <div class="d-flex justify-content-end align-items-center gap-3">
-      <div class="listIcons">
-        <a href="javascript:void(0);">
-          <span class="material-symbols-outlined"> notifications </span>
-        </a>
-        <a href="javascript:void(0);">
-          <span class="material-symbols-outlined"> widgets </span>
-        </a>
-        <a href="javascript:void(0);">
-          <span class="material-symbols-outlined"> settings </span>
-        </a>
-        <a href="javascript:void(0);">
-          <span class="material-symbols-outlined"> dark_mode </span>
-        </a>
-      </div>
-      <div class="profileDrop">
-        <a href="javascript:void(0)" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-          <div class="bgRandom" [style.background]="randomColor">SD</div>
-          <div>
-            {{ userData.firstName }} {{ userData.lastName }}
-            <span class="d-block text-muted small text-capitalize">{{userData.userType}}</span>
-          </div>
-          <span class="material-symbols-outlined ms-2"> keyboard_arrow_down </span> 
-        </a>
-        <div class="dropdown-menu dropdown-menu-end fade" data-popper-placement="bottom-end">
-          <div class="dropdown-header noti-title">
-            <h6 class="text-overflow m-0">Welcome !</h6>
-          </div>
-          <a routerLink="profile" routerLinkActive="router-link-active" class="dropdown-item">
-            <span class="material-symbols-outlined me-1 align-middle"> account_circle </span> 
-            <span class="align-middle">My Profile</span>
+        <div class="listIcons">
+          <a href="javascript:void(0);">
+            <span class="material-symbols-outlined"> notifications </span>
           </a>
-          <a href="javascript:void(0);" (click)="updatePasswordModel()" class="dropdown-item">
-            <span class="material-symbols-outlined me-1 align-middle"> lock </span> 
-            <span class="align-middle">Update Password</span>
+          <a href="javascript:void(0);">
+            <span class="material-symbols-outlined"> widgets </span>
           </a>
-          <a href="/osen-angular/dashboards/wallet" class="dropdown-item">
-            <span class="material-symbols-outlined me-1 align-middle"> account_balance_wallet </span> 
-            <span class="align-middle">Wallet : <span class="fw-semibold">$985.25</span></span>
+          <a href="javascript:void(0);">
+            <span class="material-symbols-outlined"> settings </span>
           </a>
-          <!-- <a href="javascript:void(0);" class="dropdown-item">
+          <a href="javascript:void(0);">
+            <span class="material-symbols-outlined"> dark_mode </span>
+          </a>
+        </div>
+        <div class="profileDrop">
+          <a
+            href="javascript:void(0)"
+            class="d-flex align-items-center text-decoration-none"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div class="bgRandom" [style.background]="randomColor">SD</div>
+            <div>
+              {{ userData.firstName }} {{ userData.lastName }}
+              <span class="d-block text-muted small text-capitalize">{{
+                userData.userType
+              }}</span>
+            </div>
+            <span class="material-symbols-outlined ms-2">
+              keyboard_arrow_down
+            </span>
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-end fade"
+            data-popper-placement="bottom-end"
+          >
+            <div class="dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome !</h6>
+            </div>
+            <a
+              routerLink="profile"
+              routerLinkActive="router-link-active"
+              class="dropdown-item"
+            >
+              <span class="material-symbols-outlined me-1 align-middle">
+                account_circle
+              </span>
+              <span class="align-middle">My Profile</span>
+            </a>
+            <a
+              href="javascript:void(0);"
+              (click)="updatePasswordModel()"
+              class="dropdown-item"
+            >
+              <span class="material-symbols-outlined me-1 align-middle">
+                lock
+              </span>
+              <span class="align-middle">Update Password</span>
+            </a>
+            <a href="/osen-angular/dashboards/wallet" class="dropdown-item">
+              <span class="material-symbols-outlined me-1 align-middle">
+                account_balance_wallet
+              </span>
+              <span class="align-middle"
+                >Wallet :
+                <span class="fw-semibold">{{ userData.points ?? 'NA' }}</span></span
+              >
+            </a>
+            <!-- <a href="javascript:void(0);" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> settings </span> 
             <span class="align-middle">Settings</span>
           </a>
@@ -62,18 +89,24 @@
             <span class="material-symbols-outlined me-1 align-middle"> support_agent </span> 
             <span class="align-middle">Support</span>
           </a> -->
-          <div class="dropdown-divider"></div>
-          <!-- <a href="/auth/lock-screen" class="dropdown-item">
+            <div class="dropdown-divider"></div>
+            <!-- <a href="/auth/lock-screen" class="dropdown-item">
             <span class="material-symbols-outlined me-1 align-middle"> lock </span> 
             <span class="align-middle">Lock Screen</span>
           </a> -->
-          <a href="javascript:void(0);" (click)="logout()" class="dropdown-item fw-semibold text-danger">
-            <span class="material-symbols-outlined me-1 align-middle"> logout </span> 
-            <span class="align-middle">Sign Out</span>
-          </a>
+            <a
+              href="javascript:void(0);"
+              (click)="logout()"
+              class="dropdown-item fw-semibold text-danger"
+            >
+              <span class="material-symbols-outlined me-1 align-middle">
+                logout
+              </span>
+              <span class="align-middle">Sign Out</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </header>
