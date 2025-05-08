@@ -1,8 +1,100 @@
+$primary-color: #007bff;
+$secondary-color: #555;
+$text-color: #333;
+$label-color: #777;
+$border-color: #ddd;
+$light-border-color: #eee;
+$focus-color: $primary-color;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+$card-border-radius: 8px;
+$default-spacing: 20px;
+$small-spacing: 5px;
+$font-size-base: 1rem;
+$font-size-small: 0.9rem;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
 
-
-.form-control {
-    font-size: 1rem;
-    padding: 10px;
-    
+.profile-container {
+  font-family: sans-serif;
 }
 
+.profile-title {
+  color: $text-color;
+  margin-bottom: $default-spacing;
+  font-weight: $font-weight-semibold;
+  font-size: 2rem;
+}
+
+.breadcrumb {
+  margin-bottom: 15px;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+
+  &-item {
+    padding: 0;
+
+    & + &::before {
+      color: #aaa;
+      content: ">";
+      padding: 0 8px;
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.active {
+      color: $secondary-color;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+.profile-card {
+  border: 1px solid $border-color;
+  border-radius: $card-border-radius;
+  margin-bottom: $default-spacing + 5px;
+  box-shadow: $box-shadow;
+  background-color: #fff;
+
+  &-body {
+    padding: $default-spacing + 5px;
+  }
+}
+
+.profile-row {
+  display: flex;
+  gap: $default-spacing;
+  flex-wrap: wrap;
+}
+
+.profile-col {
+  flex: 1;
+  min-width: 300px;
+}
+
+.form-group {
+  margin-bottom: $default-spacing;
+}
+
+.form-label {
+  display: block;
+  color: $label-color;
+  margin-bottom: $small-spacing;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+}
+
+.form-control-static {
+  padding: 10px 0;
+  font-size: $font-size-base;
+  color: $text-color;
+  border-bottom: 1px solid $light-border-color;
+}

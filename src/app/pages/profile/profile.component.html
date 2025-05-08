@@ -1,44 +1,49 @@
-<h2 class="main-title">My Profile</h2>
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Profile</li>
-  </ol>
-</nav>
-<div class="card">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label fw-bold">User ID:</label>
-          <div class="form-control">{{ userData.userid }}</div>
+<div class="profile-container">
+  <h2 class="profile-title">My Profile</h2>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Profile</li>
+    </ol>
+  </nav>
+  <div class="profile-card">
+    <div class="profile-card-body">
+      <div class="profile-row">
+        <div class="profile-col">
+          <div class="form-group">
+            <label class="form-label">User ID:</label>
+            <div class="form-control-static">{{ userData.userid }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">First Name:</label>
+            <div class="form-control-static">{{ userData.firstName }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name:</label>
+            <div class="form-control-static">{{ userData.lastName }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email:</label>
+            <div class="form-control-static">{{ userData.emailid }}</div>
+          </div>
         </div>
-
-        <div class="mb-3">
-          <label class="form-label fw-bold">Full Name:</label>
-          <div class="form-control">{{ userData.firstName }} {{ userData.lastName }}</div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label fw-bold">Email:</label>
-          <div class="form-control">{{ userData.emailid }}</div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label fw-bold">User Type:</label>
-          <div class="form-control">{{ userData.userType }}</div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label fw-bold">Group Name:</label>
-          <div class="form-control">{{ userData.groupName }}</div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label fw-bold">Points:</label>
-          <div class="form-control">{{ userData.points }}</div>
+        <div class="profile-col">
+          <div class="form-group">
+            <label class="form-label">User Type:</label>
+            <div class="form-control-static">{{ userData.userType }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Group Name:</label>
+            <div class="form-control-static">{{ userData.groupName }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Group Type:</label>
+            <div class="form-control-static">{{ userData.groupType }}</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Group Subtype:</label>
+            <div class="form-control-static">{{ userData.groupSubtype }}</div>
+          </div>
         </div>
       </div>
     </div>

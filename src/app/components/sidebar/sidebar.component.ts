@@ -22,8 +22,9 @@ export class SidebarComponent {
   }
 
   public appPages = [
-    { title: 'Dashboard', url: '', icon: 'home' },
-    { title: 'Contracts', url: 'contracts', icon: 'newspaper' },
+    { title: 'Draft Contracts', url: '', icon: 'drafts' },
+    { title: 'Create Contracts ', url: 'contracts', icon: 'note_add' },
+    { title: 'Closed Contracts ', url: 'contracts', icon: 'mail_lock' },
     // { title: 'Our Services', url: 'our-services', icon: 'aperture-outline' },
   ];
 }
