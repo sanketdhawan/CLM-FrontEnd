@@ -1,3 +1,37 @@
-<p>
-  closed-contract works!
-</p>
+<h2 class="main-title mb-4">Closed Contracts</h2>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Closed Contracts</li>
+  </ol>
+</nav>
+
+<div class="closed-contracts-file-explorer">
+  @for (contract of closedContracts; track contract.contractId) {
+  <div class="file-item closed-contract-item">
+    <div class="icon">
+      <span class="material-symbols-outlined">folder</span>
+    </div>
+    <div class="details">
+      <div class="file-name">{{ contract.contractName }}</div>
+      <div class="file-info">
+        Library: {{ contract.contractLibrary }} | Created: {{ contract.crtDate | date:'yyyy-MM-dd' }} | Modified: {{ contract.mdydate | date:'yyyy-MM-dd' }}
+      </div>
+      <span class="badge bg-success">Closed</span>
+    </div>
+    <div class="actions">
+      <button class="btn btn-sm btn-outline-primary">
+        <span class="material-symbols-outlined">visibility</span> Read
+      </button>
+      <button class="btn btn-sm btn-success ms-2">
+        <span class="material-symbols-outlined">upload_file</span> Submit
+      </button>
+    </div>
+  </div>
+  }
+</div>
+
+@if (closedContracts.length === 0 && !globalLoaderService.isLoading) {
+  <p class="mt-3 text-muted">No closed contracts found.</p>
+}

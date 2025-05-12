@@ -7,6 +7,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ContractsComponent } from './pages/contracts/contracts.component';
+import { CreateContractComponent } from './pages/contracts/create-contract/create-contract.component';
+import { ClosedContractComponent } from './pages/contracts/closed-contract/closed-contract.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard] },
@@ -26,13 +28,23 @@ export const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: 'contracts',
+                path: 'contracts/drafts',
                 component: ContractsComponent,
                 canActivate: [AuthGuard],
             },
             {
+                path: 'contracts/initiate',
+                component: CreateContractComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'contracts/closed',
+                component: ClosedContractComponent,
+                canActivate: [AuthGuard],
+            },
+            {
                 path: '',
-                component: DashboardComponent,
+                component: ContractsComponent,
                 canActivate: [AuthGuard],
             },
         ],

@@ -38,7 +38,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/global.scss", 
+              "src/global.scss",
               "src/theme/variables.scss"
             ],
             "scripts": [
@@ -89,7 +89,7 @@
             },
             "development": {
               "buildTarget": "app:build:development",
-              "port": 9696 
+              "port": 9696
             },
             "ci": {
               "progress": false
@@ -121,7 +121,10 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -135,7 +138,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

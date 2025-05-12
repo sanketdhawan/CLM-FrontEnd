@@ -1,0 +1,67 @@
+.closed-contracts-file-explorer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Adjust min width as needed */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.file-item.closed-contract-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .icon {
+    margin-right: 15px;
+    font-size: 1.8em;
+    color: #ffc107; /* Example folder color for closed contracts */
+  }
+
+  .details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .file-name {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .file-info {
+      font-size: 0.9em;
+      color: #6c757d;
+      margin-bottom: 8px; /* Add some space for the badge */
+    }
+
+    .badge {
+      font-size: 0.8em;
+    }
+  }
+
+  .actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      font-size: 0.9em;
+      padding: 8px 12px;
+    }
+
+    span.material-symbols-outlined {
+      font-size: 1em;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+
+  &:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+  }
+}

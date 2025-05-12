@@ -1,20 +1,81 @@
-ul{
-    margin: 15px 0;
-    padding: 0;
+ul {
     list-style: none;
-    li{
-        a{
-            font-size: 18px;
-            font-weight:500;
-            color: #fff;
+    padding: 0;
+    margin: 0;
+    color: white;
+
+    .menu-group {
+
+        .menu-group-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            text-decoration: none;
-            gap: 10px;
-            width: 100%;
-            padding: 10px 15px;
-            strong{
-                font-weight: inherit;
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: #496272;
+            transition: background-color 0.15s ease-in-out;
+
+            strong {
+                font-size: 1em;
+                color: white;
+            }
+
+            .material-symbols-outlined {
+                transition: transform 0.2s ease-in-out;
+                /* Simple ease-in-out for now */
+                color: white;
+
+                &.expanded {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .menu-group-items {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.2s ease-in-out;
+            /* Simple ease-in-out for now */
+
+
+            &.open {
+                max-height: 500px;
+            }
+
+            .menu-item {
+                a {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    color: #aed6f1;
+                    gap: 10px;
+                    padding: 5px 15px;
+
+                    .material-symbols-outlined {
+                        margin-right: 8px;
+                        color: white;
+                    }
+
+                    strong {
+                        font-size: 0.9em;
+                        color: white;
+                    }
+
+                    &.selected {
+                        font-weight: bold;
+                        color: #fff;
+                        background-color: #233744;
+                        position: relative;
+
+                        &:before {
+                            border: 6px solid transparent;
+                            border-left-color: #6e8595;
+                            content: "";
+                            position: absolute;
+                            right: 14px;
+                        }
+                    }
+                }
             }
         }
     }

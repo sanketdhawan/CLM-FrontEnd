@@ -1,17 +1,19 @@
 <ul>
-  @for (p of appPages; track p; let i = $index) {
-  <li>
-    <a
-      href="javascript:void(0);"
-      routerDirection="root"
-      [routerLink]="[p.url]"
-      routerLinkActive="selected"
-    >
-      <span class="material-symbols-outlined">
-        {{ p.icon }}
-      </span>
-      <strong>{{ p.title }}</strong>
-    </a>
+  @for (group of groupedAppPages; track group; let i = $index) {
+  <li class="menu-group">
+    <div class="menu-group-header" (click)="toggleGroup(i)">
+      <strong>{{ group.heading }}</strong>
+      <i class="fa" [class.fa-chevron-down]="!isGroupShown(i)" [class.fa-chevron-up]="isGroupShown(i)"></i>
+    </div>
+    <ul class="menu-group-items" [class.open]="isGroupShown(i)">
+      @for (p of group.pages; track p; let j = $index) {
+      <li class="menu-item">
+        <a href="javascript:void(0);" routerDirection="root" [routerLink]="[p.url]" routerLinkActive="selected">
+          <i class="fa" [ngClass]="'fa ' + p.icon"></i> <strong>{{ p.title }}</strong>
+        </a>
+      </li>
+      }
+    </ul>
   </li>
   }
 </ul>
