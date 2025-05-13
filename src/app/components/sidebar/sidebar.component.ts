@@ -25,8 +25,8 @@ export class SidebarComponent {
     {
       heading: 'Contracts',
       pages: [
+        { title: 'Initiate Contract', url: 'contracts/initiate', icon: 'fa-plus-circle' },
         { title: 'Draft Contracts', url: 'contracts/drafts', icon: 'fa-inbox' },
-        { title: 'Initiate Contracts', url: 'contracts/initiate', icon: 'fa-plus-circle' },
         { title: 'Closed Contracts', url: 'contracts/closed', icon: 'fa-lock' },
       ],
     },

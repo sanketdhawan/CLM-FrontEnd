@@ -1,5 +1,5 @@
-<h2 class="main-title mb-4">Create Contracts</h2>
 
+<h2 class="main-title mb-4">Initiate New Contract</h2>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -7,36 +7,43 @@
   </ol>
 </nav>
 
-<div>
-  <h3>Initiate New Contract</h3>
-  <p>Select the type of contract to initiate:</p>
-  <button class="btn btn-primary">
-    Initiate Non-Disclosure Agreement
-  </button>
-
-  <div class="modal fade" id="initiateContractModal" tabindex="-1" aria-labelledby="initiateContractModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="initiateContractModalLabel">Initiate Non-Disclosure Agreement</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="initiateForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="clientName" class="form-label">Client's Name</label>
-              <input type="text" class="form-control" id="clientName" formControlName="contractName" required>
-              <div *ngIf="initiateForm.controls['contractName'].invalid && (initiateForm.controls['contractName'].dirty || initiateForm.controls['contractName'].touched)" class="text-danger">
-                Client's Name is required.
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button>
-              <button type="submit" class="btn btn-primary" [disabled]="initiateForm.invalid">Initiate</button>
-            </div>
-          </form>
-        </div>
+<div class="container mt-4">
+<form [formGroup]="initiateForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="contractName" class="form-label">Contract Name</label>
+      <input type="text" class="form-control" id="contractName" formControlName="contractName">
+      <div *ngIf="initiateForm.get('contractName')?.invalid && (initiateForm.get('contractName')?.dirty || initiateForm.get('contractName')?.touched)" class="text-danger">
+        Contract name is required.
       </div>
     </div>
-  </div>
+
+    <div class="mb-3">
+      <label for="industryCode" class="form-label">Industry</label>
+      <select class="form-select" id="industryCode" formControlName="industryCode">
+        <option value="">Select Industry</option>
+        <option *ngFor="let industry of industryCodes" [value]="industry.code">{{ industry.name }}</option>
+      </select>
+      <div *ngIf="initiateForm.get('industryCode')?.invalid && (initiateForm.get('industryCode')?.dirty || initiateForm.get('industryCode')?.touched)" class="text-danger">
+        Industry is required.
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="showClauseLibrary">
+      <label for="clauseLibraryCode" class="form-label">Clause Library Code</label>
+      <select class="form-select" id="clauseLibraryCode" formControlName="clauseLibraryCode">
+        <option value="">Select Clause Library Code</option>
+        <option *ngFor="let option of clauseLibraryOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
+      <div *ngIf="initiateForm.get('clauseLibraryCode')?.invalid && (initiateForm.get('clauseLibraryCode')?.dirty || initiateForm.get('clauseLibraryCode')?.touched)" class="text-danger">
+        Clause Library Code is required.
+      </div>
+    </div>
+
+    <div class="mb-3" style="display: none;">
+      <label for="makerUser" class="form-label">Maker User</label>
+      <input type="text" class="form-control" id="makerUser" formControlName="makerUser" readonly>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="initiateForm.invalid">Initiate Contract</button>
+  </form>
 </div>

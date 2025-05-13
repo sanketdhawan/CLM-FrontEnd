@@ -35,3 +35,18 @@
 @if (closedContracts.length === 0 && !globalLoaderService.isLoading) {
   <p class="mt-3 text-muted">No closed contracts found.</p>
 }
+
+
+<!-- <div class="spin-wheel-container">
+  <div class="wheel" [ngStyle]="{'transform': 'rotate(' + currentRotation + 'deg)'}">
+    <div
+      *ngFor="let segment of segments; let i = index"
+      class="segment"
+      [ngStyle]="getSegmentStyle(i)"
+    >
+      {{ segment }}
+    </div>
+  </div>
+  <button (click)="spin()" [disabled]="isSpinning">Spin!</button>
+  <div *ngIf="result" class="result">Landed on: {{ result }}</div>
+</div> -->

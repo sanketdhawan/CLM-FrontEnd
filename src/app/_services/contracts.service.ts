@@ -15,6 +15,9 @@ export class ContractService {
     return this.http.post<any>(`${this.apiUrl}/fetch`, userData);
   }
 
+  initiateContract(contractData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/init`, contractData);
+  }
 
   
 }

@@ -65,3 +65,112 @@
     cursor: pointer;
   }
 }
+$wheel-size: 400px; /* Increased size */
+$spin-duration: 5s;
+$easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$border-width: 8px;
+$shadow-color: rgba(0, 0, 0, 0.2);
+$pointer-color: #fff;
+$pointer-size: 30px;
+$pointer-offset: 20px;
+$primary-color: #007bff; // Define your primary color
+
+.spin-wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: #f0f0f0; /* Light background */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px $shadow-color;
+  position: relative; /* Needed for absolute positioning of the pointer */
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -$pointer-offset - $pointer-size; /* Adjust position */
+    width: 0;
+    height: 0;
+    border-left: $pointer-size solid $pointer-color;
+    border-top: $pointer-size / 2 solid transparent;
+    border-bottom: $pointer-size / 2 solid transparent;
+    transform: translateY(-50%);
+    z-index: 10; /* Ensure it's on top */
+  }
+}
+
+.wheel {
+  position: relative;
+  width: $wheel-size;
+  height: $wheel-size;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform $spin-duration $easing;
+  border: $border-width solid #333; /* Dark border */
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+.segment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem; /* Larger text */
+  color: #fff;
+  text-align: center;
+  user-select: none;
+  font-weight: bold; /* Bold text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+}
+
+/* Add more visually appealing colors */
+$segment-colors: (
+  #ff6b6b,
+  #4ecdc4,
+  #ffe66d,
+  #84dcc6,
+  #d9ed92,
+);
+
+@each $color in $segment-colors {
+  $index: index($segment-colors, $color);
+  .segment:nth-child(#{$index}) {
+    background-color: $color;
+  }
+}
+
+button {
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: $primary-color; /* Using the primary color variable */
+  color: white;
+  box-shadow: 0 2px 4px $shadow-color;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: gray;
+  }
+}
+
+.result {
+  margin-top: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #555;
+}
