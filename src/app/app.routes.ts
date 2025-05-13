@@ -9,6 +9,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ContractsComponent } from './pages/contracts/contracts.component';
 import { CreateContractComponent } from './pages/contracts/create-contract/create-contract.component';
 import { ClosedContractComponent } from './pages/contracts/closed-contract/closed-contract.component';
+import { EditContractComponent } from './pages/contracts/edit-contract/edit-contract.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [ReverseAuthGuard] },
@@ -42,9 +43,10 @@ export const routes: Routes = [
                 component: ClosedContractComponent,
                 canActivate: [AuthGuard],
             },
+            { path: 'contracts/edit/:id', component: EditContractComponent, canActivate: [AuthGuard], },
             {
                 path: '',
-                component: ContractsComponent,
+                component: CreateContractComponent,
                 canActivate: [AuthGuard],
             },
         ],

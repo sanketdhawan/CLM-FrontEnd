@@ -1,55 +1,55 @@
-<h2 class="main-title mb-4">Contracts</h2>
-<nav aria-label="breadcrumb">
+<h2 class="main-title mb-3">Contracts</h2>
+<nav aria-label="breadcrumb" class="mb-2">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
     <li class="breadcrumb-item active" aria-current="page">Contracts</li>
   </ol>
 </nav>
 
-<div class="contracts-file-explorer">
+<div class="contracts-list">
   @for (contract of contracts; track contract.contractId) {
-  <div class="file-item">
-    <div class="icon">
-      <span class="material-symbols-outlined">description</span>
+  <div class="contract-item">
+    <div class="actions-top">
+      <a [routerLink]="['/contracts/edit', contract.contractId]" class="btn btn-sm btn-outline-success edit-button">
+        <span class="material-symbols-outlined">edit</span> Edit
+      </a>
     </div>
-    <div class="details">
-      <div class="file-name">{{ contract.contractName }}</div>
-      <div class="file-info">
-        Library: {{ contract.contractLibrary }} | Created: {{ contract.crtDate | date:'yyyy-MM-dd' }} | Modified: {{ contract.mdydate | date:'yyyy-MM-dd' }}
+    <div class="info">
+      <div class="file-name">
+        <span class="material-symbols-outlined document-icon">description</span>
+        {{ contract.contractName }}
+      </div>
+      <div class="file-details">
+        <span>Library: {{ contract.contractLibrary }}</span>
+        <span class="created-date">Created: {{ contract.crtDate | date:'yyyy-MM-dd' }}</span>
+        <span class="modified-date">Modified: {{ contract.mdydate | date:'yyyy-MM-dd' }}</span>
       </div>
       <div class="progress-info">
-        Progress:
-        <div class="progress" data-bs-toggle="tooltip" data-bs-placement="top" [attr.title]="contract.progress + '%'">
-          <div class="progress-bar progress-bar-striped"
-               [ngClass]="{
-                 'bg-info': getContractStatus(contract.progress) === 'Draft',
-                 'bg-success': getContractStatus(contract.progress) === 'Completed',
-                 'bg-warning': getContractStatus(contract.progress) === 'In Progress'
-               }"
-               role="progressbar"
-               [style.width.%]="contract.progress > 100 ? 100 : contract.progress"
-               aria-valuemin="0"
-               aria-valuemax="100">
+        <span>Progress:</span>
+        <div class="progress-bar-container">
+          <div class="progress" data-bs-toggle="tooltip" data-bs-placement="top" [attr.title]="contract.progress + '%'">
+            <div class="progress-bar progress-bar-striped" [ngClass]="{
+                   'bg-info': getContractStatus(contract.progress) === 'Draft',
+                   'bg-success': getContractStatus(contract.progress) === 'Completed',
+                   'bg-warning': getContractStatus(contract.progress) === 'In Progress'
+                 }" role="progressbar" [style.width.%]="contract.progress > 100 ? 100 : contract.progress"
+              aria-valuemin="0" aria-valuemax="100">
+            </div>
           </div>
+          <span class="badge compact-badge" [ngClass]="{
+            'bg-secondary': getContractStatus(contract.progress) === 'Draft',
+            'bg-success': getContractStatus(contract.progress) === 'Completed',
+            'bg-warning': getContractStatus(contract.progress) === 'In Progress'
+          }">
+            {{ getContractStatus(contract.progress) }}
+          </span>
         </div>
-        <span class="badge" [ngClass]="{
-          'bg-secondary': getContractStatus(contract.progress) === 'Draft',
-          'bg-success': getContractStatus(contract.progress) === 'Completed',
-          'bg-warning': getContractStatus(contract.progress) === 'In Progress'
-        }">
-          {{ getContractStatus(contract.progress) }}
-        </span>
       </div>
-    </div>
-    <div class="actions">
-      <button class="btn btn-sm btn-outline-primary" (click)="editContract(contract.contractId)">
-        <span class="material-symbols-outlined">edit</span>
-      </button>
     </div>
   </div>
   }
 </div>
 
 @if (contracts.length === 0 && !globalLoaderService.isLoading) {
-  <p class="mt-3 text-muted">No contracts found.</p>
+<p class="mt-2 text-muted">No contracts found.</p>
 }

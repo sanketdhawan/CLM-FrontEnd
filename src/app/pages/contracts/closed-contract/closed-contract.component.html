@@ -1,31 +1,34 @@
-<h2 class="main-title mb-4">Closed Contracts</h2>
-
-<nav aria-label="breadcrumb">
+<h2 class="main-title mb-3">Closed Contracts</h2>
+<nav aria-label="breadcrumb" class="mb-2">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
     <li class="breadcrumb-item active" aria-current="page">Closed Contracts</li>
   </ol>
 </nav>
 
-<div class="closed-contracts-file-explorer">
+<div class="closed-contracts-list">
   @for (contract of closedContracts; track contract.contractId) {
-  <div class="file-item closed-contract-item">
-    <div class="icon">
-      <span class="material-symbols-outlined">folder</span>
-    </div>
+  <div class="contract-item closed-contract-item">
     <div class="details">
-      <div class="file-name">{{ contract.contractName }}</div>
-      <div class="file-info">
-        Library: {{ contract.contractLibrary }} | Created: {{ contract.crtDate | date:'yyyy-MM-dd' }} | Modified: {{ contract.mdydate | date:'yyyy-MM-dd' }}
+      <div class="file-name">
+        <span class="text-primary material-symbols-outlined document-icon">description</span>
+        {{ contract.contractName }}
       </div>
-      <span class="badge bg-success">Closed</span>
+      <div class="file-details">
+        <span>Library: {{ contract.contractLibrary }}</span>
+        <span class="created-date">Created: {{ contract.crtDate | date:'yyyy-MM-dd' }}</span>
+        <span class="modified-date">Modified: {{ contract.mdydate | date:'yyyy-MM-dd' }}</span>
+      </div>
+      <span class="badge bg-secondary">Closed</span>
     </div>
     <div class="actions">
-      <button class="btn btn-sm btn-outline-primary">
+      <!-- (click)="viewContract(contract.contractId)" -->
+      <button class="btn btn-sm btn-success bg-primary" >
         <span class="material-symbols-outlined">visibility</span> Read
       </button>
+       <!-- (click)="downloadContract(contract.contractId)" -->
       <button class="btn btn-sm btn-success ms-2">
-        <span class="material-symbols-outlined">upload_file</span> Submit
+        <span class="material-symbols-outlined">download</span> Download
       </button>
     </div>
   </div>
@@ -33,7 +36,7 @@
 </div>
 
 @if (closedContracts.length === 0 && !globalLoaderService.isLoading) {
-  <p class="mt-3 text-muted">No closed contracts found.</p>
+  <p class="mt-2 text-muted">No closed contracts found.</p>
 }
 
 

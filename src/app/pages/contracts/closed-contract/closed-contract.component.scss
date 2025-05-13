@@ -1,23 +1,52 @@
-.closed-contracts-file-explorer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Adjust min width as needed */
-  gap: 15px;
-  margin-top: 20px;
+.main-title {
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.file-item.closed-contract-item {
+.breadcrumb {
+  margin-bottom: 1rem;
+  color: #777;
+  a {
+    color: #007bff;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.closed-contracts-list {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+@media (min-width: 992px) {
+  .closed-contracts-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.contract-item.closed-contract-item {
   display: flex;
   align-items: center;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f8f9fa;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
 
   .icon {
     margin-right: 15px;
     font-size: 1.8em;
-    color: #ffc107; /* Example folder color for closed contracts */
+    color: #ffc107; /* Yellow/Gold for closed folder */
   }
 
   .details {
@@ -27,150 +56,79 @@
     gap: 5px;
 
     .file-name {
-      font-weight: bold;
-      color: #333;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #3a3a3a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .document-icon {
+        font-size: 1.2rem;
+        color: #6c757d; /* Muted document icon for closed */
+      }
     }
 
-    .file-info {
-      font-size: 0.9em;
-      color: #6c757d;
-      margin-bottom: 8px; /* Add some space for the badge */
+    .file-details {
+      font-size: 0.9rem;
+      color: #666;
+
+      span {
+        margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
     }
 
-    .badge {
-      font-size: 0.8em;
+    .badge.bg-success {
+      margin-top: 5px;
+      font-weight: 400;
     }
   }
 
   .actions {
-    margin-left: auto;
+    margin-left: 15px;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 8px;
 
     button {
-      font-size: 0.9em;
-      padding: 8px 12px;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 4px;
+
+      &.btn-outline-primary {
+        border: 1px solid #007bff;
+        color: #007bff;
+        transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+        &:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
+      }
+
+      &.btn-success {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        transition: background-color 0.15s ease-in-out;
+        &:hover {
+          background-color: #218838;
+        }
+
+        .material-symbols-outlined {
+          font-size: 1rem;
+          vertical-align: middle;
+          margin-right: 5px;
+        }
+      }
     }
-
-    span.material-symbols-outlined {
-      font-size: 1em;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-  }
-
-  &:hover {
-    background-color: #e9ecef;
-    cursor: pointer;
-  }
-}
-$wheel-size: 400px; /* Increased size */
-$spin-duration: 5s;
-$easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-$border-width: 8px;
-$shadow-color: rgba(0, 0, 0, 0.2);
-$pointer-color: #fff;
-$pointer-size: 30px;
-$pointer-offset: 20px;
-$primary-color: #007bff; // Define your primary color
-
-.spin-wheel-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  background-color: #f0f0f0; /* Light background */
-  border-radius: 12px;
-  box-shadow: 0 4px 8px $shadow-color;
-  position: relative; /* Needed for absolute positioning of the pointer */
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -$pointer-offset - $pointer-size; /* Adjust position */
-    width: 0;
-    height: 0;
-    border-left: $pointer-size solid $pointer-color;
-    border-top: $pointer-size / 2 solid transparent;
-    border-bottom: $pointer-size / 2 solid transparent;
-    transform: translateY(-50%);
-    z-index: 10; /* Ensure it's on top */
   }
 }
 
-.wheel {
-  position: relative;
-  width: $wheel-size;
-  height: $wheel-size;
-  border-radius: 50%;
-  overflow: hidden;
-  transition: transform $spin-duration $easing;
-  border: $border-width solid #333; /* Dark border */
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1); /* Inner shadow */
-}
-
-.segment {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.4rem; /* Larger text */
-  color: #fff;
-  text-align: center;
-  user-select: none;
-  font-weight: bold; /* Bold text */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
-}
-
-/* Add more visually appealing colors */
-$segment-colors: (
-  #ff6b6b,
-  #4ecdc4,
-  #ffe66d,
-  #84dcc6,
-  #d9ed92,
-);
-
-@each $color in $segment-colors {
-  $index: index($segment-colors, $color);
-  .segment:nth-child(#{$index}) {
-    background-color: $color;
-  }
-}
-
-button {
-  margin-top: 30px;
-  padding: 12px 24px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background-color: $primary-color; /* Using the primary color variable */
-  color: white;
-  box-shadow: 0 2px 4px $shadow-color;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    background-color: gray;
-  }
-}
-
-.result {
-  margin-top: 30px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #555;
+.text-muted {
+  font-style: italic;
+  color: #777;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }

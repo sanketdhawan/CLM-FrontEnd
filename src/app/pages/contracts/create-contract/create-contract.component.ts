@@ -29,14 +29,14 @@ export class CreateContractComponent implements OnInit {
         '01': 'Non Disclosure Agreement - NDA'
       }
     },
-    {
-      code: '01',
-      name: 'Mergers and Acquisitions',
-      clauselibrarycodes: {
-        '01': { '01': 'Term Sheet' },
-        '02': { '02': 'Shareholder Agreement' }
-      }
-    }
+    // {
+    //   code: '01',
+    //   name: 'Mergers and Acquisitions',
+    //   clauselibrarycodes: {
+    //     '01': { '01': 'Term Sheet' },
+    //     '02': { '02': 'Shareholder Agreement' }
+    //   }
+    // }
   ];
   clauseLibraryOptions: { value: string; label: string }[] = [];
   defaultMakerUser: string = ''; // Initialize as empty

@@ -1,129 +1,162 @@
-.custom-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
-    overflow: hidden; /* To contain the border-radius for thead/tbody */
-    background-color: #fff;
+.main-title {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
 
-    thead {
-        background-color: #f8f9fa; /* Light background for header */
-        border-bottom: 1px solid #dee2e6;
-
-        th {
-            padding: 1rem 1.2rem;
-            font-weight: 500;
-            color: #495057;
-            text-align: left;
-            white-space: nowrap; /* Prevent text wrapping in headers */
-        }
+.breadcrumb {
+  margin-bottom: 1rem;
+  color: #777;
+  a {
+    color: #007bff;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
     }
-
-    tbody {
-        tr {
-            transition: background-color 0.2s ease-in-out;
-
-            &:nth-child(even) {
-                background-color: #f8f9fa; /* Slightly different background for even rows */
-            }
-
-            &:hover {
-                background-color: #e9ecef; /* Lighter background on hover */
-            }
-
-            td {
-                padding: 1rem 1.2rem;
-                color: #212529;
-
-
-                .badge {
-                    font-weight: 400;
-                }
-            }
-        }
-    }
+  }
 }
 
-.table-responsive {
-    margin-bottom: 1rem;
-}
-
-.text-muted {
-    font-style: italic;
-}
-
-.progress-bar {
-  transition: width 0.8s ease-in-out;
-}
-.contracts-file-explorer {
+.contracts-list {
+  margin-top: 15px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 15px;
-  margin-top: 20px;
 }
 
-.file-item {
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f8f9fa;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+@media (min-width: 992px) {
+  .contracts-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
-  .icon {
-    margin-right: 15px;
-    font-size: 1.8em; /* Adjust as needed for Google Icons */
-    color: #007bff; /* Example file icon color */
+.contract-item {
+  position: relative; /* For absolute positioning of top actions */
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  overflow: hidden; /* To contain the top actions within border-radius */
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 
-  .details {
+  .actions-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .edit-button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #28a745; /* Green border */
+    background-color: #fff;
+    color: #28a745; /* Green text */
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+    &:hover {
+      background-color: #28a745; /* Green background on hover */
+      color: #fff;
+    }
+
+    .material-symbols-outlined {
+      font-size: 1rem;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+
+  .info {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 
     .file-name {
-      font-weight: bold;
-      color: #333;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #3a3a3a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .document-icon {
+        font-size: 1.2rem;
+        color: #007bff; /* Blue document icon */
+      }
     }
 
-    .file-info {
-      font-size: 0.9em;
-      color: #6c757d;
+    .file-details {
+      font-size: 0.9rem;
+      color: #666;
+
+      span {
+        display: block;
+        margin-bottom: 3px;
+      }
     }
 
     .progress-info {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9em;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 10px;
+
+      .progress-bar-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
       .progress {
-        width: 150px;
+        flex-grow: 1;
         height: 0.5rem;
+        border-radius: 0.25rem;
+        background-color: #ddd;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        background-color: #00c853;
+        border-radius: 0.25rem;
+        transition: width 0.3s ease-in-out;
+      }
+
+      .compact-badge {
+        font-size: 0.8rem;
+        font-weight: 400;
+        padding: 0.3rem 0.5rem;
+        border-radius: 0.2rem;
+
+        &.bg-secondary {
+          background-color: #6c757d;
+          color: #fff;
+        }
+        &.bg-success {
+          background-color: #28a745;
+          color: #fff;
+        }
+        &.bg-warning {
+          background-color: #ffc107;
+          color: #212529;
+        }
       }
     }
   }
-
-  .actions {
-    margin-left: auto;
-    button {
-      font-size: 0.9em;
-      padding: 5px 8px;
-    }
-    span.material-symbols-outlined {
-      font-size: 1em; /* Adjust icon size within the button */
-      vertical-align: middle; /* Align icon with text if any */
-    }
-  }
-
-  &:hover {
-    background-color: #e9ecef;
-    cursor: pointer;
-  }
 }
 
-.progress-info .badge {
-  font-size: 0.8em;
+.text-muted {
+  font-style: italic;
+  color: #777;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }

@@ -1,49 +1,46 @@
+<div class="create-contract-page">
 
-<h2 class="main-title mb-4">Initiate New Contract</h2>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Contracts</li>
-  </ol>
-</nav>
 
-<div class="container mt-4">
-<form [formGroup]="initiateForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="contractName" class="form-label">Contract Name</label>
-      <input type="text" class="form-control" id="contractName" formControlName="contractName">
-      <div *ngIf="initiateForm.get('contractName')?.invalid && (initiateForm.get('contractName')?.dirty || initiateForm.get('contractName')?.touched)" class="text-danger">
-        Contract name is required.
+
+  <div class="form-container">
+      <h2 class="main-title mb-3">Initiate New Contract</h2>
+    <form [formGroup]="initiateForm" (ngSubmit)="onSubmit()" class="initiate-form">
+      <div class="form-group">
+        <label for="contractName" class="form-label">Contract Name</label>
+        <input type="text" class="form-control" id="contractName" formControlName="contractName">
+        <div *ngIf="initiateForm.get('contractName')?.invalid && (initiateForm.get('contractName')?.dirty || initiateForm.get('contractName')?.touched)" class="error-message">
+          Contract name is required.
+        </div>
       </div>
-    </div>
 
-    <div class="mb-3">
-      <label for="industryCode" class="form-label">Industry</label>
-      <select class="form-select" id="industryCode" formControlName="industryCode">
-        <option value="">Select Industry</option>
-        <option *ngFor="let industry of industryCodes" [value]="industry.code">{{ industry.name }}</option>
-      </select>
-      <div *ngIf="initiateForm.get('industryCode')?.invalid && (initiateForm.get('industryCode')?.dirty || initiateForm.get('industryCode')?.touched)" class="text-danger">
-        Industry is required.
+      <div class="form-group">
+        <label for="industryCode" class="form-label">Industry</label>
+        <select class="form-select" id="industryCode" formControlName="industryCode">
+          <option value="">Select Industry</option>
+          <option *ngFor="let industry of industryCodes" [value]="industry.code">{{ industry.name }}</option>
+        </select>
+        <div *ngIf="initiateForm.get('industryCode')?.invalid && (initiateForm.get('industryCode')?.dirty || initiateForm.get('industryCode')?.touched)" class="error-message">
+          Industry is required.
+        </div>
       </div>
-    </div>
 
-    <div class="mb-3" *ngIf="showClauseLibrary">
-      <label for="clauseLibraryCode" class="form-label">Clause Library Code</label>
-      <select class="form-select" id="clauseLibraryCode" formControlName="clauseLibraryCode">
-        <option value="">Select Clause Library Code</option>
-        <option *ngFor="let option of clauseLibraryOptions" [value]="option.value">{{ option.label }}</option>
-      </select>
-      <div *ngIf="initiateForm.get('clauseLibraryCode')?.invalid && (initiateForm.get('clauseLibraryCode')?.dirty || initiateForm.get('clauseLibraryCode')?.touched)" class="text-danger">
-        Clause Library Code is required.
+      <div class="form-group" *ngIf="showClauseLibrary">
+        <label for="clauseLibraryCode" class="form-label">Clause Library Code</label>
+        <select class="form-select" id="clauseLibraryCode" formControlName="clauseLibraryCode">
+          <option value="">Select Clause Library Code</option>
+          <option *ngFor="let option of clauseLibraryOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+        <div *ngIf="initiateForm.get('clauseLibraryCode')?.invalid && (initiateForm.get('clauseLibraryCode')?.dirty || initiateForm.get('clauseLibraryCode')?.touched)" class="error-message">
+          Clause Library Code is required.
+        </div>
       </div>
-    </div>
 
-    <div class="mb-3" style="display: none;">
-      <label for="makerUser" class="form-label">Maker User</label>
-      <input type="text" class="form-control" id="makerUser" formControlName="makerUser" readonly>
-    </div>
+      <div class="form-group" style="display: none;">
+        <label for="makerUser" class="form-label">Maker User</label>
+        <input type="text" class="form-control" id="makerUser" formControlName="makerUser" readonly>
+      </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="initiateForm.invalid">Initiate Contract</button>
-  </form>
+      <button type="submit" class="btn btn-primary initiate-button" [disabled]="initiateForm.invalid">Initiate Contract</button>
+    </form>
+  </div>
 </div>

@@ -1,0 +1,306 @@
+<div class="edit-contract-page">
+  <h2 class="main-title mb-3">Edit Contract</h2>
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/contracts">Contracts</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit Contract</li>
+    </ol>
+  </nav>
+
+  <div class="form-container">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+      <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+          <a class="nav-link active" id="parties-tab" data-bs-toggle="tab" href="#parties" role="tab" aria-controls="parties" aria-selected="true">Parties Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="other-details-tab" data-bs-toggle="tab" href="#other-details" role="tab" aria-controls="other-details" aria-selected="false">Other Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="signatory-tab" data-bs-toggle="tab" href="#signatory" role="tab" aria-controls="signatory" aria-selected="false">Signatory Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="misc-tab" data-bs-toggle="tab" href="#misc" role="tab" aria-controls="misc" aria-selected="false">Miscellaneous Details</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" id="additional-tab" data-bs-toggle="tab" href="#additional" role="tab" aria-controls="additional" aria-selected="false">Additional Fields</a>
+        </li> -->
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="parties" role="tabpanel" aria-labelledby="parties-tab">
+          <div class="form-group">
+            <label for="contractName" class="form-label">Contract Name</label>
+            <input type="text" class="form-control" id="contractName" formControlName="contractName">
+            <div *ngIf="editForm.get('contractName')?.invalid && (editForm.get('contractName')?.dirty || editForm.get('contractName')?.touched)" class="error-message">
+              Contract name is required.
+            </div>
+          </div>
+          <h5 class="form-section-title">Client Company</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpCname" class="form-label">Name</label>
+                <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpCadd" class="form-label">Address</label>
+                <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpCpan" class="form-label">PAN</label>
+                <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpP1" class="form-label">Contact Person 1</label>
+                <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpP1pan" class="form-label">Contact Person 1 PAN</label>
+                <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpP2" class="form-label">Contact Person 2</label>
+                <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdpP2pan" class="form-label">Contact Person 2 PAN</label>
+                <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan">
+              </div>
+            </div>
+          </div>
+
+          <h5 class="form-section-title">Counterparty Company</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpCname" class="form-label">Name</label>
+                <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpCadd" class="form-label">Address</label>
+                <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpCpan" class="form-label">PAN</label>
+                <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpP1" class="form-label">Contact Person 1</label>
+                <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpP1pan" class="form-label">Contact Person 1 PAN</label>
+                <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpP2" class="form-label">Contact Person 2</label>
+                <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrpP2pan" class="form-label">Contact Person 2 PAN</label>
+                <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="recRpb" class="form-label">Receiving RPB</label>
+                <input type="text" class="form-control" id="recRpb" formControlName="recRpb">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="recDpb" class="form-label">Receiving DPB</label>
+                <input type="text" class="form-control" id="recDpb" formControlName="recDpb">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="recBusp" class="form-label">Receiving Business Purpose</label>
+                <input type="text" class="form-control" id="recBusp" formControlName="recBusp">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="tcDur" class="form-label">TC Duration</label>
+                <input type="text" class="form-control" id="tcDur" formControlName="tcDur">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="obcBp" class="form-label">OBC BP</label>
+                <input type="text" class="form-control" id="obcBp" formControlName="obcBp">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="rc" class="form-label">RC</label>
+                <input type="number" class="form-control" id="rc" formControlName="rc">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nsc" class="form-label">NSC</label>
+                <input type="number" class="form-control" id="nsc" formControlName="nsc">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="gc" class="form-label">GC</label>
+                <input type="number" class="form-control" id="gc" formControlName="gc">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="gcCountry" class="form-label">GC Country</label>
+                <input type="text" class="form-control" id="gcCountry" formControlName="gcCountry">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="gcCity" class="form-label">GC City</label>
+                <input type="text" class="form-control" id="gcCity" formControlName="gcCity">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="contractFor" class="form-label">Contract For</label>
+                <input type="number" class="form-control" id="contractFor" formControlName="contractFor">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncdp" class="form-label">PNCDP</label>
+                <input type="number" class="form-control" id="pncdp" formControlName="pncdp">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pncrp" class="form-label">PNCRP</label>
+                <input type="number" class="form-control" id="pncrp" formControlName="pncrp">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
+          <h5 class="form-section-title">Client Signatory</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sigDPName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="sigDPName" formControlName="sigDPName">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sigDPDes" class="form-label">Designation</label>
+                <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes">
+              </div>
+            </div>
+          </div>
+
+          <h5 class="form-section-title">Counterparty Signatory</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sigRPName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="sigRPName" formControlName="sigRPName">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sigRPDes" class="form-label">Designation</label>
+                <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="misc" role="tabpanel" aria-labelledby="misc-tab">
+          <h5 class="form-section-title">Client Miscellaneous</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="miscDPADD" class="form-label">Address</label>
+                <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="miscDPATT" class="form-label">Attention</label>
+                <input type="text" class="form-control" id="miscDPATT" formControlName="miscDPATT">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="dpNickname" class="form-label">Nickname</label>
+                <input type="text" class="form-control" id="dpNickname" formControlName="dpNickname">
+              </div>
+            </div>
+          </div>
+
+          <h5 class="form-section-title">Counterparty Miscellaneous</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="miscRPADD" class="form-label">Address</label>
+                <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="miscRPATT" class="form-label">Attention</label>
+                <input type="text" class="form-control" id="miscRPATT" formControlName="miscRPATT">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="rpNickname" class="form-label">Nickname</label>
+                <input type="text" class="form-control" id="rpNickname" formControlName="rpNickname">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="tab-pane fade" id="additional" role="tabpanel" aria-labelledby="additional-tab">
+          </div> -->
+      </div>
+
+      <div class="button-group mt-3">
+        <button type="button" class="btn btn-secondary draft-button" (click)="saveToDraft()">Save to Draft</button>
+        <button type="submit" class="btn btn-primary submit-button" [disabled]="editForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
