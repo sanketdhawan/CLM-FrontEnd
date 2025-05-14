@@ -6,10 +6,10 @@
       <h2 class="main-title mb-3">Initiate New Contract</h2>
     <form [formGroup]="initiateForm" (ngSubmit)="onSubmit()" class="initiate-form">
       <div class="form-group">
-        <label for="contractName" class="form-label">Contract Name</label>
+        <label for="contractName" class="form-label">Client Name</label>
         <input type="text" class="form-control" id="contractName" formControlName="contractName">
         <div *ngIf="initiateForm.get('contractName')?.invalid && (initiateForm.get('contractName')?.dirty || initiateForm.get('contractName')?.touched)" class="error-message">
-          Contract name is required.
+          Client name is required.
         </div>
       </div>
 

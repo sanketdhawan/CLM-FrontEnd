@@ -39,45 +39,45 @@ export class EditContractComponent implements OnInit {
     });
 
     this.editForm = this.fb.group({
-      contractName: ['', Validators.required],
-      contractFor: [''],
-      pncdp: [''],
-      pncrp: [''],
-      pncdpCname: [''],
-      pncrpCname: [''],
-      pncdpCadd: [''],
-      pncrpCadd: [''],
-      pncdpCpan: [''],
-      pncrpCpan: [''],
-      pncdpP1: [''],
-      pncrpP1: [''],
-      pncdpP2: [''],
-      pncrpP2: [''],
-      pncdpP1pan: [''],
-      pncrpP1pan: [''],
-      pncdpP2pan: [''],
-      pncrpP2pan: [''],
-      recRpb: [''],
-      recDpb: [''],
-      recBusp: [''],
-      tcDur: [''],
-      obcBp: [''],
-      rc: [''],
-      nsc: [''],
-      gc: [''],
-      gcCountry: [''],
-      gcCity: [''],
-      sigDPName: [''],
-      sigRPName: [''],
-      sigDPDes: [''],
-      sigRPDes: [''],
-      miscDPADD: [''],
-      miscRPADD: [''],
-      miscDPATT: [''],
-      miscRPATT: [''],
-      dpNickname: [''],
-      rpNickname: [''],
-    });
+    contractName: ['', Validators.required],
+    contractFor: [''],
+    pncdp: [''],
+    pncrp: [''],
+    pncdpCname: [''],
+    pncrpCname: [''],
+    pncdpCadd: [''],
+    pncrpCadd: [''],
+    pncdpCpan: [''],
+    pncrpCpan: [''],
+    pncdpP1: [''],
+    pncrpP1: [''],
+    pncdpP2: [''],
+    pncrpP2: [''],
+    pncdpP1pan: [''],
+    pncrpP1pan: [''],
+    pncdpP2pan: [''],
+    pncrpP2pan: [''],
+    recRpb: [''],
+    recDpb: [''],
+    recBusp: [''],
+    tcDur: [''],
+    obcBp: [''],
+    rc: [''],
+    nsc: [''],
+    gc: [''],
+    gcCountry: [''],
+    gcCity: [''],
+    sigDPName: [''],
+    sigRPName: [''],
+    sigDPDes: [''],
+    sigRPDes: [''],
+    miscDPADD: [''],
+    miscRPADD: [''],
+    miscDpATT: [''], // Updated casing
+    miscRPATT: [''],
+    dpNickName: [''], // Updated casing
+    rpNickName: [''], // Updated casing
+  });
   }
 
   loadContractDetails(id: string): void {
@@ -143,6 +143,7 @@ export class EditContractComponent implements OnInit {
         contractId: parseInt(this.contractId, 10),
         ...this.editForm.value,
       };
+    console.log('Submitting data:', submitData); // Add this line
 
       this.contractService.submitContractDetails(submitData).subscribe({ // Use the new submit method
         next: (response) => {
