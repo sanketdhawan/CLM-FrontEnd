@@ -1,3 +1,13 @@
 <div  *ngIf="isLoading$ | async" class="loader-overlay">
-  <ion-spinner name="lines-sharp" color="success" style="transform: scale(1.5);"></ion-spinner>
+  <!-- <ion-spinner name="lines-sharp" color="success" style="transform: scale(1.5);"></ion-spinner> -->
+<div class="loader-spinner-container">
+  <svg class="loader-spinner-large" width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" stroke="#00ff00">
+    <g fill="none" fill-rule="evenodd" stroke-width="3">
+      <circle cx="30" cy="30" r="26" stroke-linecap="round">
+        <animate attributeName="stroke-dasharray" dur="1.2s" repeatCount="indefinite" from="0 163.36281798666924" to="130 163.36281798666924" />
+        <animate attributeName="stroke-dashoffset" dur="1.2s" repeatCount="indefinite" from="0" to="-326.7256359733385" />
+      </circle>
+    </g>
+  </svg>
+</div>
 </div>
