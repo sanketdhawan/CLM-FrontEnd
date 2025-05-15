@@ -40,7 +40,10 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="contractFor" class="form-label">Contract For</label>
-              <input type="number" class="form-control" id="contractFor" formControlName="contractFor">
+              <select class="form-control" id="contractFor" formControlName="contractFor">
+                <option value="">Select Here</option>
+                <option *ngFor="let option of contractForOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
             </div>
           </div>
           <h5 class="form-section-title">Disclosing Party</h5>
@@ -48,7 +51,10 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdp" class="form-label">PNCDP</label>
-                <input type="number" class="form-control" id="pncdp" formControlName="pncdp">
+                <select class="form-control" id="pncdp" formControlName="pncdp">
+                  <option value="">Select Here</option>
+                  <option *ngFor="let option of pncdpOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
               </div>
             </div>
 
@@ -107,7 +113,10 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrp" class="form-label">PNCRP</label>
-                <input type="number" class="form-control" id="pncrp" formControlName="pncrp">
+                <select class="form-control" id="pncrp" formControlName="pncrp">
+                  <option value="">Select Here</option>
+                  <option *ngFor="let option of pncrpOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
               </div>
             </div>
             <div class="col-md-6">
@@ -198,22 +207,28 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="rc" class="form-label">Remedies Clause</label>
-                <input type="number" class="form-control" id="rc" formControlName="rc">
+                <select class="form-control" id="rc" formControlName="rc">
+                  <option value="">Select Here</option>
+                  <option *ngFor="let option of rcOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
               </div>
             </div>
-            <div class="col-md-6 disabled">
+            <div class="col-md-6 disabled" style="display: none;">
               <div class="form-group">
                 <label for="obcBp" class="form-label">OBC BP (remove)</label>
                 <input type="text" class="form-control" id="obcBp" formControlName="obcBp">
               </div>
             </div>
-            </div>
-            <h5 class="form-section-title">Governing Clause</h5>
+          </div>
+          <h5 class="form-section-title">Governing Clause</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="gc" class="form-label">Cluase Type</label>
-                <input type="number" class="form-control" id="gc" formControlName="gc">
+                <select class="form-control" id="gc" formControlName="gc">
+                  <option value="">Select Here</option>
+                  <option *ngFor="let option of gcOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
               </div>
             </div>
             <div class="col-md-6">
@@ -231,13 +246,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="nsc" class="form-label">NSC toggle</label>
-                <input type="number" class="form-control" id="nsc" formControlName="nsc">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="nsc" formControlName="nsc">
+                  <label class="form-check-label" for="nsc">Enable NSC</label>
+                </div>
               </div>
             </div>
-            
-            
           </div>
-
         </div>
 
         <div class="tab-pane fade" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
@@ -296,16 +311,8 @@
               </div>
             </div>
           </div>
-
-
-         
-
-        
         </div>
-
-       
-
-      </div>
+        </div>
 
       <div class="button-group mt-3">
         <button type="button" class="btn btn-secondary draft-button" (click)="saveToDraft()">Save to Draft</button>

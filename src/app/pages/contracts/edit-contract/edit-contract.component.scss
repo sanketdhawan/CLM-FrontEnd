@@ -30,7 +30,7 @@
   }
 
   .form-container {
-   
+
     .nav-tabs {
       border-bottom: 1px solid #dee2e6;
       margin-bottom: 1rem;
@@ -93,7 +93,35 @@
             margin-bottom: 0.25rem;
           }
 
+          select.form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 2.25rem 0.375rem 0.75rem; /* Adjusted right padding for arrow */
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            appearance: none; /* Remove default arrow */
+            background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23343a40%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+
+            &:focus {
+              color: #495057;
+              background-color: #fff;
+              border-color: #80bdff;
+              outline: 0;
+              box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            }
+          }
+
           .form-control {
+            /* Styles for regular input elements remain here */
             display: block;
             width: 100%;
             padding: 0.375rem 0.75rem;

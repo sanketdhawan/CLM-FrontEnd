@@ -11,6 +11,11 @@ interface ContractDetails {
   contractResponse: any;
 }
 
+interface DropdownOption {
+  value: string | number;
+  label: string;
+}
+
 @Component({
   selector: 'app-edit-contract',
   templateUrl: './edit-contract.component.html',
@@ -28,6 +33,40 @@ export class EditContractComponent implements OnInit {
   router = inject(Router);
   private fb = inject(FormBuilder);
 
+  contractForOptions: DropdownOption[] = [
+    { value: '1', label: 'Mutual NDA' },
+    { value: '2', label: 'Disclosing Party NDA' },
+    { value: '3', label: 'Recipient Party NDA' },
+  ];
+
+  pncdpOptions: DropdownOption[] = [
+    { value: '1', label: 'Standard' },
+    { value: '2', label: 'Company' },
+    { value: '3', label: 'Partnership' },
+    { value: '4', label: 'LLP' },
+    { value: '5', label: 'Individual' },
+  ];
+
+  pncrpOptions: DropdownOption[] = [
+    { value: '1', label: 'Standard' },
+    { value: '2', label: 'Company' },
+    { value: '3', label: 'Partnership' },
+    { value: '4', label: 'LLP' },
+    { value: '5', label: 'Individual' },
+  ];
+
+  rcOptions: DropdownOption[] = [
+    { value: '1', label: 'With Aggregate Liability' },
+    { value: '2', label: 'Without Aggregate Liability' },
+  ];
+
+  gcOptions: DropdownOption[] = [
+    { value: '1', label: 'Governing Law - Standard' },
+    { value: '2', label: 'Governing Law - Without Arbitration' },
+    { value: '3', label: 'Foreign Law Standard' },
+    { value: '4', label: 'Foreign Law - Without Arbitration' },
+  ];
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.contractId = params.get('id');
@@ -39,52 +78,52 @@ export class EditContractComponent implements OnInit {
     });
 
     this.editForm = this.fb.group({
-    contractName: ['', Validators.required],
-    contractFor: [''],
-    pncdp: [''],
-    pncrp: [''],
-    pncdpCname: [''],
-    pncrpCname: [''],
-    pncdpCadd: [''],
-    pncrpCadd: [''],
-    pncdpCpan: [''],
-    pncrpCpan: [''],
-    pncdpP1: [''],
-    pncrpP1: [''],
-    pncdpP2: [''],
-    pncrpP2: [''],
-    pncdpP1pan: [''],
-    pncrpP1pan: [''],
-    pncdpP2pan: [''],
-    pncrpP2pan: [''],
-    recRpb: [''],
-    recDpb: [''],
-    recBusp: [''],
-    tcDur: [''],
-    obcBp: [''],
-    rc: [''],
-    nsc: [''],
-    gc: [''],
-    gcCountry: [''],
-    gcCity: [''],
-    sigDPName: [''],
-    sigRPName: [''],
-    sigDPDes: [''],
-    sigRPDes: [''],
-    miscDPADD: [''],
-    miscRPADD: [''],
-    miscDpATT: [''], // Updated casing
-    miscRPATT: [''],
-    dpNickName: [''], // Updated casing
-    rpNickName: [''], // Updated casing
-  });
+      contractName: ['', Validators.required],
+      contractFor: [''],
+      pncdp: [''],
+      pncrp: [''],
+      pncdpCname: [''],
+      pncrpCname: [''],
+      pncdpCadd: [''],
+      pncrpCadd: [''],
+      pncdpCpan: [''],
+      pncrpCpan: [''],
+      pncdpP1: [''],
+      pncrpP1: [''],
+      pncdpP2: [''],
+      pncrpP2: [''],
+      pncdpP1pan: [''],
+      pncrpP1pan: [''],
+      pncdpP2pan: [''],
+      pncrpP2pan: [''],
+      recRpb: [''],
+      recDpb: [''],
+      recBusp: [''],
+      tcDur: [''],
+      obcBp: [''],
+      rc: [''],
+      nsc: [''],
+      gc: [''],
+      gcCountry: [''],
+      gcCity: [''],
+      sigDPName: [''],
+      sigRPName: [''],
+      sigDPDes: [''],
+      sigRPDes: [''],
+      miscDPADD: [''],
+      miscRPADD: [''],
+      miscDpATT: [''],
+      miscRPATT: [''],
+      dpNickName: [''],
+      rpNickName: [''],
+    });
   }
 
   loadContractDetails(id: string): void {
     this.globalLoaderService.showLoader();
     console.log('Fetching contract details for ID:', id);
 
-    this.contractService.fetchContractDetails({ contractID: parseInt(this.contractId!, 10) }).subscribe({ // Changed 'contractId' to 'contractID'
+    this.contractService.fetchContractDetails({ contractID: parseInt(this.contractId!, 10) }).subscribe({
       next: (data) => {
         console.log('Full API Response:', data);
         if (data && data.mis01Model) {
@@ -116,6 +155,7 @@ export class EditContractComponent implements OnInit {
         type: 'DRAFT',
         contractId: parseInt(this.contractId, 10),
         ...this.editForm.value,
+        nsc: this.editForm.value.nsc ? 1 : 0,
       };
 
       this.contractService.updateContractDetails(updatedData).subscribe({
@@ -142,8 +182,9 @@ export class EditContractComponent implements OnInit {
         type: 'SUBMIT',
         contractId: parseInt(this.contractId, 10),
         ...this.editForm.value,
+        nsc: this.editForm.value.nsc ? 1 : 0,
       };
-    console.log('Submitting data:', submitData); // Add this line
+      console.log('Submitting data:', submitData); // Add this line
 
       this.contractService.submitContractDetails(submitData).subscribe({ // Use the new submit method
         next: (response) => {
