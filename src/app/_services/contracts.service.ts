@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ContractService {
-  private apiUrl = 'https://api.auctapace.com/clm/v1/contract';
-  private submitUrl = 'https://api.auctapace.com/clm/v1/mis/submit01';
+  private apiUrl = 'http://localhost:8080/clm/v1/contract';
+  private submitUrl = 'http://localhost:8080/clm/v1/mis/submit01';
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +28,7 @@ export class ContractService {
   }
 
   submitContractDetails(submitData: any): Observable<any> {
+    console.log(submitData)
     return this.http.post(this.submitUrl, submitData);
   }
 }

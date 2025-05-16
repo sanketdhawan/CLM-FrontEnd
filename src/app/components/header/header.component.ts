@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonMenuToggle } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
@@ -14,11 +14,12 @@ import { UpdatePasswordComponent } from 'src/app/pages/update-password/update-pa
   standalone: true,
   imports: [IonMenuToggle, RouterLink],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router) {}
   randomColor: string = '#000000';
   userInfoSubscription: Subscription | undefined;
   userData: any;
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
     this.randomColor = this.generateDarkColor();
@@ -26,8 +27,8 @@ export class HeaderComponent {
     this.userInfoSubscription = this.authService
       .getUserInfo$()
       .subscribe((data) => {
-        this.userData = data; // Now you have it!
-        // console.log('DashboardComponent: User Data:', this.userData);
+        this.userData = data;
+        this.checkFirstLogin(); // Check first login flag after user data is available
       });
   }
 
@@ -35,13 +36,29 @@ export class HeaderComponent {
     this.userInfoSubscription?.unsubscribe();
   }
 
+  checkFirstLogin(): void {
+    const storedUserData = localStorage.getItem('userInfo');
+    if (storedUserData) {
+      const userInfo = JSON.parse(storedUserData);
+      if (userInfo.firstLoginFlag === 'Y') {
+        this.openUpdatePasswordModal(true); // Open modal with backdrop and keyboard disabled
+      }
+    }
+  }
 
-  private modalService = inject(NgbModal);
+  updatePasswordModel() {
+    this.openUpdatePasswordModal(false); // Open modal normally if triggered from UI
+  }
 
-	updatePasswordModel() {
-		const modalRef = this.modalService.open(UpdatePasswordComponent, { centered: true });
-		modalRef.componentInstance.userData = this.userData;
-	}
+  openUpdatePasswordModal(preventClose: boolean = false) {
+    const modalRef = this.modalService.open(UpdatePasswordComponent, {
+      centered: true,
+      backdrop: 'static', // Force static backdrop here
+      keyboard: false,   // Force keyboard to false here
+    });
+    modalRef.componentInstance.userData = this.userData;
+    modalRef.componentInstance.isFirstLogin = preventClose; // Pass the flag for conditional close button
+  }
 
   generateDarkColor(): string {
     const hue = Math.floor(Math.random() * 360);

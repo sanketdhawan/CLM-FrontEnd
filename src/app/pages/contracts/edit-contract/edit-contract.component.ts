@@ -114,8 +114,8 @@ export class EditContractComponent implements OnInit {
       miscRPADD: [''],
       miscDpATT: [''],
       miscRPATT: [''],
-      dpNickName: [''],
-      rpNickName: [''],
+      dpNickname: [''],
+      rpNickname: [''],
     });
   }
 
@@ -154,9 +154,13 @@ export class EditContractComponent implements OnInit {
       const updatedData = {
         type: 'DRAFT',
         contractId: parseInt(this.contractId, 10),
+        dpNickName: this.editForm.value.dpNickname,
+        rpNickName: this.editForm.value.rpNickname,
         ...this.editForm.value,
         nsc: this.editForm.value.nsc ? 1 : 0,
       };
+
+      console.log(updatedData)
 
       this.contractService.updateContractDetails(updatedData).subscribe({
         next: (response) => {
@@ -181,6 +185,8 @@ export class EditContractComponent implements OnInit {
       const submitData = {
         type: 'SUBMIT',
         contractId: parseInt(this.contractId, 10),
+        dpNickName: this.editForm.value.dpNickname,
+        rpNickName: this.editForm.value.rpNickname,
         ...this.editForm.value,
         nsc: this.editForm.value.nsc ? 1 : 0,
       };
@@ -189,12 +195,12 @@ export class EditContractComponent implements OnInit {
       this.contractService.submitContractDetails(submitData).subscribe({ // Use the new submit method
         next: (response) => {
           this.globalLoaderService.hideLoader();
-          this.globalAlertService.setMessage('Contract details submitted successfully!', 'success');
-          this.router.navigate(['/contracts']); // Redirect to the contracts list page
+          this.globalAlertService.setMessage(response.message, 'success');
+          //this.router.navigate(['/contracts/closed']); // Redirect to the contracts list page
         },
         error: (error) => {
           this.globalLoaderService.hideLoader();
-          this.globalAlertService.setMessage('Error submitting contract details.', 'danger');
+          this.globalAlertService.setMessage(error+ 'Error submitting contract details.', 'danger');
           console.error('Error submitting contract details:', error);
         },
       });
