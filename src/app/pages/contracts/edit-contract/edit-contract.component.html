@@ -28,7 +28,7 @@
         <div class="tab-pane fade show active" id="parties" role="tabpanel" aria-labelledby="parties-tab">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="contractName" class="form-label">Client Name </label>
+              <label for="contractName" class="form-label">Client Name (remove from here) </label>
               <input type="text" class="form-control" id="contractName" formControlName="contractName">
               <div
                 *ngIf="editForm.get('contractName')?.invalid && (editForm.get('contractName')?.dirty || editForm.get('contractName')?.touched)"
@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdp" class="form-label">PNCDP</label>
+                <label for="pncdp" class="form-label">Entity Type</label>
                 <select class="form-control" id="pncdp" formControlName="pncdp">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of pncdpOptions" [value]="option.value">{{ option.label }}</option>
@@ -60,49 +60,49 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCname" class="form-label">Company Name</label>
+                <label for="pncdpCname" class="form-label">Entity Name</label>
                 <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCadd" class="form-label">Company Address</label>
+                <label for="pncdpCadd" class="form-label">Entity Address</label>
                 <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCpan" class="form-label">Company PAN</label>
+                <label for="pncdpCpan" class="form-label">Entity PAN</label>
                 <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP1" class="form-label">Contact Person 1</label>
+                <label for="pncdpP1" class="form-label">Designated Person 1</label>
                 <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP1pan" class="form-label">Contact Person 1 PAN</label>
+                <label for="pncdpP1pan" class="form-label">Designated Person 1 PAN</label>
                 <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP2" class="form-label">Contact Person 2</label>
+                <label for="pncdpP2" class="form-label">Designated Person 2</label>
                 <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP2pan" class="form-label">Contact Person 2 PAN</label>
+                <label for="pncdpP2pan" class="form-label">Designated Person 2 PAN</label>
                 <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="dpNickName" class="form-label">Nickname</label>
+                <label for="dpNickName" class="form-label">Designated Entity Name</label>
                 <input type="text" class="form-control" id="dpNickName" formControlName="dpNickname">
               </div>
             </div>
@@ -112,7 +112,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrp" class="form-label">PNCRP</label>
+                <label for="pncrp" class="form-label">Entity Type</label>
                 <select class="form-control" id="pncrp" formControlName="pncrp">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of pncrpOptions" [value]="option.value">{{ option.label }}</option>
@@ -121,49 +121,49 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCname" class="form-label">Company Name</label>
+                <label for="pncrpCname" class="form-label">Entity Name</label>
                 <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCadd" class="form-label">Company Address</label>
+                <label for="pncrpCadd" class="form-label">Entity Address</label>
                 <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCpan" class="form-label">Company PAN</label>
+                <label for="pncrpCpan" class="form-label">Entity PAN</label>
                 <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP1" class="form-label">Contact Person 1</label>
+                <label for="pncrpP1" class="form-label">Designated Person 1</label>
                 <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP1pan" class="form-label">Contact Person 1 PAN</label>
+                <label for="pncrpP1pan" class="form-label">Designated Person 1 PAN</label>
                 <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP2" class="form-label">Contact Person 2</label>
+                <label for="pncrpP2" class="form-label">Designated Person 2</label>
                 <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP2pan" class="form-label">Contact Person 2 PAN</label>
+                <label for="pncrpP2pan" class="form-label">Designated Person 2 PAN</label>
                 <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rpNickName" class="form-label">Nickname</label>
+                <label for="rpNickName" class="form-label">Designated Entity Name</label>
                 <input type="text" class="form-control" id="rpNickName" formControlName="rpNickname">
               </div>
             </div>
@@ -176,13 +176,13 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recRpb" class="form-label">Recipient Business</label>
+                <label for="recRpb" class="form-label">Recipient Party Business</label>
                 <input type="text" class="form-control" id="recRpb" formControlName="recRpb">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recDpb" class="form-label">Disclosing Business</label>
+                <label for="recDpb" class="form-label">Disclosing Party Business</label>
                 <input type="text" class="form-control" id="recDpb" formControlName="recDpb">
               </div>
             </div>
@@ -202,11 +202,11 @@
               </div>
             </div>
           </div>
-          <h5 class="form-section-title">Remedies Clause</h5>
+          <h5 class="form-section-title">Liability Clause</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rc" class="form-label">Remedies Clause</label>
+                <label for="rc" class="form-label">Clause Type</label>
                 <select class="form-control" id="rc" formControlName="rc">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of rcOptions" [value]="option.value">{{ option.label }}</option>
@@ -220,11 +220,11 @@
               </div>
             </div>
           </div>
-          <h5 class="form-section-title">Governing Clause</h5>
+          <h5 class="form-section-title">Governing Law</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="gc" class="form-label">Cluase Type</label>
+                <label for="gc" class="form-label">Clause Type</label>
                 <select class="form-control" id="gc" formControlName="gc">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of gcOptions" [value]="option.value">{{ option.label }}</option>
@@ -245,10 +245,10 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="nsc" class="form-label">NSC toggle</label>
+                <label for="nsc" class="form-label">Non-Solicitation Clause</label>
                 <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" id="nsc" formControlName="nsc">
-                  <label class="form-check-label" for="nsc">Enable NSC</label>
+                  <label class="form-check-label" for="nsc">Add Clause</label>
                 </div>
               </div>
             </div>
@@ -266,13 +266,13 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigDPDes" class="form-label">SPOC Designation</label>
+                <label for="sigDPDes" class="form-label">Designation</label>
                 <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscDPADD" class="form-label">Notice Address</label>
+                <label for="miscDPADD" class="form-label">Notice address, email and contact</label>
                 <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD">
               </div>
             </div>
@@ -294,13 +294,13 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigRPDes" class="form-label">SPOC Designation</label>
+                <label for="sigRPDes" class="form-label">Designation</label>
                 <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscRPADD" class="form-label">Notice Address</label>
+                <label for="miscRPADD" class="form-label">Notice address, email and contact</label>
                 <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD">
               </div>
             </div>

@@ -25,9 +25,9 @@
       </div>
 
       <div class="form-group" *ngIf="showClauseLibrary">
-        <label for="clauseLibraryCode" class="form-label">Clause Library Code</label>
+        <label for="clauseLibraryCode" class="form-label">Library</label>
         <select class="form-select" id="clauseLibraryCode" formControlName="clauseLibraryCode">
-          <option value="">Select Clause Library Code</option>
+          <option value="">Select Agreement Type</option>
           <option *ngFor="let option of clauseLibraryOptions" [value]="option.value">{{ option.label }}</option>
         </select>
         <div *ngIf="initiateForm.get('clauseLibraryCode')?.invalid && (initiateForm.get('clauseLibraryCode')?.dirty || initiateForm.get('clauseLibraryCode')?.touched)" class="error-message">

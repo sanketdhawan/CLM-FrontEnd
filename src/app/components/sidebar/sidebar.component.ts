@@ -30,13 +30,13 @@ export class SidebarComponent {
         { title: 'Closed Contracts', url: 'contracts/closed', icon: 'fa-lock' },
       ],
     },
-    {
-      heading: 'Settings',
-      pages: [
-        { title: 'Our Services', url: 'our-services', icon: 'fa-cog' }, 
-        { title: 'Site Configrations', url: 'settings', icon: 'fa-wrench' }, 
-      ],
-    },
+    // {
+    //   heading: 'Settings',
+    //   pages: [
+    //     { title: 'Our Services', url: 'our-services', icon: 'fa-cog' }, 
+    //     { title: 'Site Configrations', url: 'settings', icon: 'fa-wrench' }, 
+    //   ],
+    // },
   ];
 
   activeGroupIndex: number | null = 0;
