@@ -8,188 +8,405 @@
   </nav>
 
   <div class="form-container">
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <div *ngIf="contractNotFound" class="" role="alert">
+      <h3>No Contract Found</h3>
+      <p>The contract with the provided ID does not exist or could not be loaded.</p>
+      <a routerLink="/contracts/drafts" class="btn btn-primary mt-3">Go to Contracts List</a>
+    </div>
+
+    <form *ngIf="!contractNotFound" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
       <ul class="nav nav-tabs mb-3">
         <li class="nav-item">
-          <a class="nav-link active" id="parties-tab" data-bs-toggle="tab" href="#parties" role="tab"
-            aria-controls="parties" aria-selected="true">Party Name Clause</a>
+          <a class="nav-link" id="parties-tab" [class.active]="activeTabId === 'parties'"
+            (click)="onTabClick($event, 'parties')" role="tab" aria-controls="parties"
+            [attr.aria-selected]="activeTabId === 'parties'">Party Name Clause</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="other-details-tab" data-bs-toggle="tab" href="#other-details" role="tab"
-            aria-controls="other-details" aria-selected="false">Other Clauses</a>
+          <a class="nav-link" id="other-details-tab" [class.active]="activeTabId === 'other-details'"
+            (click)="onTabClick($event, 'other-details')" role="tab" aria-controls="other-details"
+            [attr.aria-selected]="activeTabId === 'other-details'">Other Clauses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="signatory-tab" data-bs-toggle="tab" href="#signatory" role="tab"
-            aria-controls="signatory" aria-selected="false">Signature and Miscellaneous Details</a>
+          <a class="nav-link" id="signatory-tab" [class.active]="activeTabId === 'signatory'"
+            (click)="onTabClick($event, 'signatory')" role="tab" aria-controls="signatory"
+            [attr.aria-selected]="activeTabId === 'signatory'">Signature and Miscellaneous Details</a>
         </li>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane fade show active" id="parties" role="tabpanel" aria-labelledby="parties-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'parties'" [class.active]="activeTabId === 'parties'"
+          id="parties" role="tabpanel" aria-labelledby="parties-tab">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="contractName" class="form-label">Client Name (remove from here) </label>
-              <input type="text" class="form-control" id="contractName" formControlName="contractName">
+              <label for="contractName" class="form-label">Client Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="contractName" formControlName="contractName"
+                spellcheck="true">
               <div
                 *ngIf="editForm.get('contractName')?.invalid && (editForm.get('contractName')?.dirty || editForm.get('contractName')?.touched)"
-                class="error-message">
-                Client name is required.
+                class="error-message text-danger">
+                <span *ngIf="editForm.get('contractName')?.errors?.['required']">
+                  Client name is required.
+                </span>
+                <span *ngIf="editForm.get('contractName')?.errors?.['minlength']">
+                  Client name must be at least 3 characters long.
+                </span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="contractFor" class="form-label">Contract For</label>
+              <label for="contractFor" class="form-label">Contract For <span class="text-danger">*</span></label>
               <select class="form-control" id="contractFor" formControlName="contractFor">
                 <option value="">Select Here</option>
                 <option *ngFor="let option of contractForOptions" [value]="option.value">{{ option.label }}</option>
               </select>
+              <div
+                *ngIf="editForm.get('contractFor')?.invalid && (editForm.get('contractFor')?.dirty || editForm.get('contractFor')?.touched)"
+                class="error-message text-danger">
+                Contract For is required.
+              </div>
             </div>
           </div>
           <h5 class="form-section-title">Disclosing Party</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdp" class="form-label">Entity Type</label>
+                <label for="pncdp" class="form-label">Entity Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="pncdp" formControlName="pncdp">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of pncdpOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
+                <div
+                  *ngIf="editForm.get('pncdp')?.invalid && (editForm.get('pncdp')?.dirty || editForm.get('pncdp')?.touched)"
+                  class="error-message text-danger">
+                  Entity Type is required.
+                </div>
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCname" class="form-label">Entity Name</label>
-                <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname">
+                <label for="pncdpCname" class="form-label">Entity Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpCname')?.invalid && (editForm.get('pncdpCname')?.dirty || editForm.get('pncdpCname')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpCname')?.errors?.['required']">
+                    Entity Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncdpCname')?.errors?.['minlength']">
+                    Entity Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCadd" class="form-label">Entity Address</label>
-                <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd">
+                <label for="pncdpCadd" class="form-label">Entity Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpCadd')?.invalid && (editForm.get('pncdpCadd')?.dirty || editForm.get('pncdpCadd')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpCadd')?.errors?.['required']">
+                    Entity Address is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncdpCadd')?.errors?.['minlength']">
+                    Entity Address must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpCpan" class="form-label">Entity PAN</label>
-                <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan">
+                <label for="pncdpCpan" class="form-label">Entity PAN <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpCpan')?.invalid && (editForm.get('pncdpCpan')?.dirty || editForm.get('pncdpCpan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpCpan')?.errors?.['required']">
+                    Entity PAN is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncdpCpan')?.errors?.['minlength']">
+                    Entity PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP1" class="form-label">Designated Person 1</label>
-                <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1">
+                <label for="pncdpP1" class="form-label">Designated Person 1 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpP1')?.invalid && (editForm.get('pncdpP1')?.dirty || editForm.get('pncdpP1')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpP1')?.errors?.['required']">
+                    Designated Person 1 is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncdpP1')?.errors?.['minlength']">
+                    Designated Person 1 must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP1pan" class="form-label">Designated Person 1 PAN</label>
-                <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan">
+                <label for="pncdpP1pan" class="form-label">Designated Person 1 PAN <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpP1pan')?.invalid && (editForm.get('pncdpP1pan')?.dirty || editForm.get('pncdpP1pan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpP1pan')?.errors?.['required']">
+                    Designated Person 1 PAN is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncdpP1pan')?.errors?.['minlength']">
+                    Designated Person 1 PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpP2" class="form-label">Designated Person 2</label>
-                <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2">
+                <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpP2')?.invalid && (editForm.get('pncdpP2')?.dirty || editForm.get('pncdpP2')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpP2')?.errors?.['minlength']">
+                    Designated Person 2 must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpP2pan" class="form-label">Designated Person 2 PAN</label>
-                <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan">
+                <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncdpP2pan')?.invalid && (editForm.get('pncdpP2pan')?.dirty || editForm.get('pncdpP2pan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncdpP2pan')?.errors?.['minlength']">
+                    Designated Person 2 PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="dpNickName" class="form-label">Designated Entity Name</label>
-                <input type="text" class="form-control" id="dpNickName" formControlName="dpNickname">
+                <label for="dpNickName" class="form-label">Entity Represented Name <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dpNickName" formControlName="dpNickname" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('dpNickname')?.invalid && (editForm.get('dpNickname')?.dirty || editForm.get('dpNickname')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('dpNickname')?.errors?.['required']">
+                    Entity Represented Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('dpNickname')?.errors?.['minlength']">
+                    Entity Represented Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <h5 class="form-section-title">Reciepient Party</h5>
+          <h5 class="form-section-title">Recipient Party</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrp" class="form-label">Entity Type</label>
+                <label for="pncrp" class="form-label">Entity Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="pncrp" formControlName="pncrp">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of pncrpOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
+                <div
+                  *ngIf="editForm.get('pncrp')?.invalid && (editForm.get('pncrp')?.dirty || editForm.get('pncrp')?.touched)"
+                  class="error-message text-danger">
+                  Entity Type is required.
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCname" class="form-label">Entity Name</label>
-                <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname">
+                <label for="pncrpCname" class="form-label">Entity Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpCname')?.invalid && (editForm.get('pncrpCname')?.dirty || editForm.get('pncrpCname')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpCname')?.errors?.['required']">
+                    Entity Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncrpCname')?.errors?.['minlength']">
+                    Entity Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCadd" class="form-label">Entity Address</label>
-                <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd">
+                <label for="pncrpCadd" class="form-label">Entity Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpCadd')?.invalid && (editForm.get('pncrpCadd')?.dirty || editForm.get('pncrpCadd')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpCadd')?.errors?.['required']">
+                    Entity Address is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncrpCadd')?.errors?.['minlength']">
+                    Entity Address must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpCpan" class="form-label">Entity PAN</label>
-                <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan">
+                <label for="pncrpCpan" class="form-label">Entity PAN <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpCpan')?.invalid && (editForm.get('pncrpCpan')?.dirty || editForm.get('pncrpCpan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpCpan')?.errors?.['required']">
+                    Entity PAN is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncrpCpan')?.errors?.['minlength']">
+                    Entity PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP1" class="form-label">Designated Person 1</label>
-                <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1">
+                <label for="pncrpP1" class="form-label">Designated Person 1 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpP1')?.invalid && (editForm.get('pncrpP1')?.dirty || editForm.get('pncrpP1')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpP1')?.errors?.['required']">
+                    Designated Person 1 is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncrpP1')?.errors?.['minlength']">
+                    Designated Person 1 must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP1pan" class="form-label">Designated Person 1 PAN</label>
-                <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan">
+                <label for="pncrpP1pan" class="form-label">Designated Person 1 PAN <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpP1pan')?.invalid && (editForm.get('pncrpP1pan')?.dirty || editForm.get('pncrpP1pan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpP1pan')?.errors?.['required']">
+                    Designated Person 1 PAN is required.
+                  </span>
+                  <span *ngIf="editForm.get('pncrpP1pan')?.errors?.['minlength']">
+                    Designated Person 1 PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpP2" class="form-label">Designated Person 2</label>
-                <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2">
+                <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpP2')?.invalid && (editForm.get('pncrpP2')?.dirty || editForm.get('pncrpP2')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpP2')?.errors?.['minlength']">
+                    Designated Person 2 must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpP2pan" class="form-label">Designated Person 2 PAN</label>
-                <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan">
+                <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('pncrpP2pan')?.invalid && (editForm.get('pncrpP2pan')?.dirty || editForm.get('pncrpP2pan')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('pncrpP2pan')?.errors?.['minlength']">
+                    Designated Person 2 PAN must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rpNickName" class="form-label">Designated Entity Name</label>
-                <input type="text" class="form-control" id="rpNickName" formControlName="rpNickname">
+                <label for="rpNickName" class="form-label">Entity Represented Name <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="rpNickName" formControlName="rpNickname" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('rpNickname')?.invalid && (editForm.get('rpNickname')?.dirty || editForm.get('rpNickname')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('rpNickname')?.errors?.['required']">
+                    Entity Represented Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('rpNickname')?.errors?.['minlength']">
+                    Entity Represented Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'other-details'"
+          [class.active]="activeTabId === 'other-details'" id="other-details" role="tabpanel"
+          aria-labelledby="other-details-tab">
 
           <h5 class="form-section-title">Recital Clause</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recRpb" class="form-label">Recipient Party Business</label>
-                <input type="text" class="form-control" id="recRpb" formControlName="recRpb">
+                <label for="recRpb" class="form-label">Recipient Party Business <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="recRpb" formControlName="recRpb" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('recRpb')?.invalid && (editForm.get('recRpb')?.dirty || editForm.get('recRpb')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('recRpb')?.errors?.['required']">
+                    Recipient Party Business is required.
+                  </span>
+                  <span *ngIf="editForm.get('recRpb')?.errors?.['minlength']">
+                    Recipient Party Business must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recDpb" class="form-label">Disclosing Party Business</label>
-                <input type="text" class="form-control" id="recDpb" formControlName="recDpb">
+                <label for="recDpb" class="form-label">Disclosing Party Business <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="recDpb" formControlName="recDpb" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('recDpb')?.invalid && (editForm.get('recDpb')?.dirty || editForm.get('recDpb')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('recDpb')?.errors?.['required']">
+                    Disclosing Party Business is required.
+                  </span>
+                  <span *ngIf="editForm.get('recDpb')?.errors?.['minlength']">
+                    Disclosing Party Business must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recBusp" class="form-label">Business Purpose</label>
-                <input type="text" class="form-control" id="recBusp" formControlName="recBusp">
+                <label for="recBusp" class="form-label">Business Purpose <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="recBusp" formControlName="recBusp" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('recBusp')?.invalid && (editForm.get('recBusp')?.dirty || editForm.get('recBusp')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('recBusp')?.errors?.['required']">
+                    Business Purpose is required.
+                  </span>
+                  <span *ngIf="editForm.get('recBusp')?.errors?.['minlength']">
+                    Business Purpose must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -197,8 +414,18 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="tcDur" class="form-label">Duration of Term</label>
-                <input type="text" class="form-control" id="tcDur" formControlName="tcDur">
+                <label for="tcDur" class="form-label">Duration of Term <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tcDur" formControlName="tcDur" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('tcDur')?.invalid && (editForm.get('tcDur')?.dirty || editForm.get('tcDur')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('tcDur')?.errors?.['required']">
+                    Duration of Term is required.
+                  </span>
+                  <span *ngIf="editForm.get('tcDur')?.errors?.['minlength']">
+                    Duration of Term must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -206,17 +433,28 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rc" class="form-label">Clause Type</label>
+                <label for="rc" class="form-label">Clause Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="rc" formControlName="rc">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of rcOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
+                <div *ngIf="editForm.get('rc')?.invalid && (editForm.get('rc')?.dirty || editForm.get('rc')?.touched)"
+                  class="error-message text-danger">
+                  Clause Type is required.
+                </div>
               </div>
             </div>
             <div class="col-md-6 disabled" style="display: none;">
               <div class="form-group">
                 <label for="obcBp" class="form-label">OBC BP (remove)</label>
-                <input type="text" class="form-control" id="obcBp" formControlName="obcBp">
+                <input type="text" class="form-control" id="obcBp" formControlName="obcBp" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('obcBp')?.invalid && (editForm.get('obcBp')?.dirty || editForm.get('obcBp')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('obcBp')?.errors?.['minlength']">
+                    OBC BP must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -224,23 +462,47 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="gc" class="form-label">Clause Type</label>
+                <label for="gc" class="form-label">Clause Type <span class="text-danger">*</span></label>
                 <select class="form-control" id="gc" formControlName="gc">
                   <option value="">Select Here</option>
                   <option *ngFor="let option of gcOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
+                <div *ngIf="editForm.get('gc')?.invalid && (editForm.get('gc')?.dirty || editForm.get('gc')?.touched)"
+                  class="error-message text-danger">
+                  Clause Type is required.
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="gcCountry" class="form-label">Governing Country</label>
-                <input type="text" class="form-control" id="gcCountry" formControlName="gcCountry">
+                <label for="gcCountry" class="form-label">Governing Country <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="gcCountry" formControlName="gcCountry" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('gcCountry')?.invalid && (editForm.get('gcCountry')?.dirty || editForm.get('gcCountry')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('gcCountry')?.errors?.['required']">
+                    Governing Country is required.
+                  </span>
+                  <span *ngIf="editForm.get('gcCountry')?.errors?.['minlength']">
+                    Governing Country must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="gcCity" class="form-label">Governing City</label>
-                <input type="text" class="form-control" id="gcCity" formControlName="gcCity">
+                <label for="gcCity" class="form-label">Governing City <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="gcCity" formControlName="gcCity" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('gcCity')?.invalid && (editForm.get('gcCity')?.dirty || editForm.get('gcCity')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('gcCity')?.errors?.['required']">
+                    Governing City is required.
+                  </span>
+                  <span *ngIf="editForm.get('gcCity')?.errors?.['minlength']">
+                    Governing City must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -255,68 +517,152 @@
           </div>
         </div>
 
-        <div class="tab-pane fade" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'signatory'"
+          [class.active]="activeTabId === 'signatory'" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
           <h5 class="form-section-title">Disclosing Party</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigDPName" class="form-label">Signature Name</label>
-                <input type="text" class="form-control" id="sigDPName" formControlName="sigDPName">
+                <label for="sigDPName" class="form-label">Signature Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="sigDPName" formControlName="sigDPName" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('sigDPName')?.invalid && (editForm.get('sigDPName')?.dirty || editForm.get('sigDPName')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('sigDPName')?.errors?.['required']">
+                    Signature Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('sigDPName')?.errors?.['minlength']">
+                    Signature Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigDPDes" class="form-label">Designation</label>
-                <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes">
+                <label for="sigDPDes" class="form-label">Designation <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('sigDPDes')?.invalid && (editForm.get('sigDPDes')?.dirty || editForm.get('sigDPDes')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('sigDPDes')?.errors?.['required']">
+                    Designation is required.
+                  </span>
+                  <span *ngIf="editForm.get('sigDPDes')?.errors?.['minlength']">
+                    Designation must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscDPADD" class="form-label">Notice address, email and contact</label>
-                <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD">
+                <label for="miscDPADD" class="form-label">Notice address, email and contact <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('miscDPADD')?.invalid && (editForm.get('miscDPADD')?.dirty || editForm.get('miscDPADD')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('miscDPADD')?.errors?.['required']">
+                    Notice address, email and contact is required.
+                  </span>
+                  <span *ngIf="editForm.get('miscDPADD')?.errors?.['minlength']">
+                    Notice address, email and contact must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscDpATT" class="form-label">Notice Attention</label>
-                <input type="text" class="form-control" id="miscDpATT" formControlName="miscDpATT">
+                <label for="miscDpATT" class="form-label">Notice Attention <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscDpATT" formControlName="miscDpATT" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('miscDpATT')?.invalid && (editForm.get('miscDpATT')?.dirty || editForm.get('miscDpATT')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('miscDpATT')?.errors?.['required']">
+                    Notice Attention is required.
+                  </span>
+                  <span *ngIf="editForm.get('miscDpATT')?.errors?.['minlength']">
+                    Notice Attention must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <h5 class="form-section-title">Reciepient Party</h5>
+          <h5 class="form-section-title">Recipient Party</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigRPName" class="form-label">Signature Name</label>
-                <input type="text" class="form-control" id="sigRPName" formControlName="sigRPName">
+                <label for="sigRPName" class="form-label">Signature Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="sigRPName" formControlName="sigRPName" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('sigRPName')?.invalid && (editForm.get('sigRPName')?.dirty || editForm.get('sigRPName')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('sigRPName')?.errors?.['required']">
+                    Signature Name is required.
+                  </span>
+                  <span *ngIf="editForm.get('sigRPName')?.errors?.['minlength']">
+                    Signature Name must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="sigRPDes" class="form-label">Designation</label>
-                <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes">
+                <label for="sigRPDes" class="form-label">Designation <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('sigRPDes')?.invalid && (editForm.get('sigRPDes')?.dirty || editForm.get('sigRPDes')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('sigRPDes')?.errors?.['required']">
+                    Designation is required.
+                  </span>
+                  <span *ngIf="editForm.get('sigRPDes')?.errors?.['minlength']">
+                    Designation must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscRPADD" class="form-label">Notice address, email and contact</label>
-                <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD">
+                <label for="miscRPADD" class="form-label">Notice address, email and contact <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('miscRPADD')?.invalid && (editForm.get('miscRPADD')?.dirty || editForm.get('miscRPADD')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('miscRPADD')?.errors?.['required']">
+                    Notice address, email and contact is required.
+                  </span>
+                  <span *ngIf="editForm.get('miscRPADD')?.errors?.['minlength']">
+                    Notice address, email and contact must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscRPATT" class="form-label">Notice Attention</label>
-                <input type="text" class="form-control" id="miscRPATT" formControlName="miscRPATT">
+                <label for="miscRPATT" class="form-label">Notice Attention <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscRPATT" formControlName="miscRPATT" spellcheck="true">
+                <div
+                  *ngIf="editForm.get('miscRPATT')?.invalid && (editForm.get('miscRPATT')?.dirty || editForm.get('miscRPATT')?.touched)"
+                  class="error-message text-danger">
+                  <span *ngIf="editForm.get('miscRPATT')?.errors?.['required']">
+                    Notice Attention is required.
+                  </span>
+                  <span *ngIf="editForm.get('miscRPATT')?.errors?.['minlength']">
+                    Notice Attention must be at least 3 characters long.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-      <div class="button-group mt-3">
+      <div class="button-group mt-3 gap-2 d-flex">
         <button type="button" class="btn btn-secondary draft-button" (click)="saveToDraft()">Save to Draft</button>
-        <button type="submit" class="btn btn-primary submit-button" [disabled]="editForm.invalid">Submit</button>
+        <button type="submit" *ngIf="isLastTab(activeTabId)" class="btn btn-primary submit-button"
+          [disabled]="editForm.invalid">Submit</button>
       </div>
     </form>
   </div>

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class LoginService {
   // private apiUrl = `${environment.endpoint}clm/v1/user`; // Corrected URL
   // https://api.auctapace.com/clm/v1/user/login
-  private apiUrl = 'http://localhost:8080/clm/v1/user';
+  private apiUrl = 'https://api.auctapace.com/clm/v1/user';
   constructor(private http: HttpClient) {}
 
   loginUser(userData: any): Observable<any> {

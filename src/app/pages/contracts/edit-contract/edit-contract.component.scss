@@ -30,7 +30,6 @@
   }
 
   .form-container {
-
     .nav-tabs {
       border-bottom: 1px solid #dee2e6;
       margin-bottom: 1rem;
@@ -93,6 +92,7 @@
             margin-bottom: 0.25rem;
           }
 
+          /* Styles for select elements */
           select.form-control {
             display: block;
             width: 100%;
@@ -120,8 +120,8 @@
             }
           }
 
+          /* Styles for general input elements */
           .form-control {
-            /* Styles for regular input elements remain here */
             display: block;
             width: 100%;
             padding: 0.375rem 0.75rem;
@@ -141,6 +141,23 @@
               outline: 0;
               box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             }
+
+            /* --- NEW: Styling for invalid fields --- */
+            &.ng-invalid.ng-touched {
+              border-color: #dc3545; /* Red border for invalid fields */
+              padding-right: calc(1.5em + 0.75rem); /* Space for potential validation icon if needed */
+              background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+              background-repeat: no-repeat;
+              background-position: right calc(0.375em + 0.1875rem) center;
+              background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+            }
+          }
+
+          /* Specific style for select dropdown for invalid state, if different */
+          select.form-control.ng-invalid.ng-touched {
+            border-color: #dc3545;
+            // You might need to adjust background-image for select if it conflicts with default arrow
+            // For now, keeping the same as regular input to show red border
           }
 
           .error-message {
