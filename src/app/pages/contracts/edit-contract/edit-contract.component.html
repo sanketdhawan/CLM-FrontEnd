@@ -8,7 +8,8 @@
   </nav>
 
   <div class="form-container">
-    <div *ngIf="contractNotFound" class="alert alert-danger" role="alert"> <h3>No Contract Found</h3>
+    <div *ngIf="contractNotFound" class="alert alert-danger" role="alert">
+      <h3>No Contract Found</h3>
       <p>The contract with the provided ID does not exist or could not be loaded.</p>
       <a routerLink="/contracts/drafts" class="btn btn-primary mt-3">Go to Contracts List</a>
     </div>
@@ -661,7 +662,7 @@
 
       <div class="button-group mt-3 d-flex gap-2">
         <button type="button" class="btn btn-secondary draft-button" (click)="saveToDraft()">Save to Draft</button>
-        <button type="submit" class="btn btn-primary submit-button"  [disabled]="editForm.invalid" *ngIf="isLastTab(activeTabId)">
+        <button type="submit" class="btn btn-primary submit-button" *ngIf="isLastTab(activeTabId)">
           Submit
         </button>
       </div>
