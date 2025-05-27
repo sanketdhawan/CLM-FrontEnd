@@ -1,21 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; // Import DomSanitizer and SafeHtml
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalAlertService {
-  private messageSubject = new BehaviorSubject<{ message: string; type: 'success' | 'danger' }>({
+  // Change the message type to SafeHtml | string
+  private messageSubject = new BehaviorSubject<{ message: SafeHtml | string; type: 'success' | 'danger' }>({
     message: '',
     type: 'success',
   });
 
-  getMessage(): Observable<{ message: string; type: 'success' | 'danger' }> {
+  // Inject DomSanitizer
+  private sanitizer = inject(DomSanitizer);
+
+  // Update the return type to include SafeHtml
+  getMessage(): Observable<{ message: SafeHtml | string; type: 'success' | 'danger' }> {
     return this.messageSubject.asObservable();
   }
 
   setMessage(message: string, type: 'success' | 'danger'): void {
-    this.messageSubject.next({ message, type });
+    // Sanitize the message to allow HTML rendering
+    const safeMessage = this.sanitizer.bypassSecurityTrustHtml(message);
+    this.messageSubject.next({ message: safeMessage, type });
   }
 
   clearMessage(): void {

@@ -174,3 +174,72 @@
     }
   }
 }
+
+
+/* Add this to edit-contract.component.scss */
+
+.nav-link {
+  position: relative; // Needed for positioning the dot
+  display: flex; // To align text and dot
+  align-items: center; // Vertically align items
+}
+
+.error-dot {
+  display: inline-block;
+  width: 8px;   // Size of the dot
+  height: 8px;  // Size of the dot
+  background-color: red;
+  border-radius: 50%; // Makes it a circle
+  margin-left: 5px; // Space between text and dot
+  flex-shrink: 0; // Prevent dot from shrinking
+}
+
+/* Optional: Adjust tab active/hover styles if needed */
+.nav-tabs .nav-link.active .error-dot,
+.nav-tabs .nav-link:hover .error-dot {
+  // You might want to make the dot less prominent or change its color
+  // when the tab is active or hovered, depending on your design.
+  opacity: 0.8;
+}
+
+// Ensure tab content visibility is controlled by activeTabId in component
+.tab-pane {
+  display: none;
+  &.show {
+    display: block;
+  }
+}
+
+/* Add this to edit-contract.component.scss */
+
+.nav-link {
+  position: relative; // Needed for positioning the dot
+  display: flex; // To align text and dot
+  align-items: center; // Vertically align items
+}
+
+.error-dot {
+  display: inline-block;
+  width: 8px;   // Size of the dot
+  height: 8px;  // Size of the dot
+  background-color: red;
+  border-radius: 50%; // Makes it a circle
+  margin-left: 5px; // Space between text and dot
+  flex-shrink: 0; // Prevent dot from shrinking
+}
+
+/* Optional: Adjust tab active/hover styles if needed */
+.nav-tabs .nav-link.active .error-dot,
+.nav-tabs .nav-link:hover .error-dot {
+  // You might want to make the dot less prominent or change its color
+  // when the tab is active or hovered, depending on your design.
+  opacity: 0.8;
+}
+
+// Ensure tab content visibility is controlled by activeTabId in component
+.tab-pane {
+  display: none;
+  &.show {
+    display: block;
+  }
+}

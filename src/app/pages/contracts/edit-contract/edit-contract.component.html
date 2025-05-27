@@ -8,8 +8,7 @@
   </nav>
 
   <div class="form-container">
-    <div *ngIf="contractNotFound" class="" role="alert">
-      <h3>No Contract Found</h3>
+    <div *ngIf="contractNotFound" class="alert alert-danger" role="alert"> <h3>No Contract Found</h3>
       <p>The contract with the provided ID does not exist or could not be loaded.</p>
       <a routerLink="/contracts/drafts" class="btn btn-primary mt-3">Go to Contracts List</a>
     </div>
@@ -17,30 +16,40 @@
     <form *ngIf="!contractNotFound" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
       <ul class="nav nav-tabs mb-3">
         <li class="nav-item">
-          <a class="nav-link" id="parties-tab" [class.active]="activeTabId === 'parties'"
-            (click)="onTabClick($event, 'parties')" role="tab" aria-controls="parties"
-            [attr.aria-selected]="activeTabId === 'parties'">Party Name Clause</a>
+          <a class="nav-link" id="parties-tab"
+             [class.active]="activeTabId === 'parties'"
+             (click)="onTabClick($event, 'parties')"
+             role="tab" aria-controls="parties" [attr.aria-selected]="activeTabId === 'parties'">
+             Party Name Clause
+             <span class="error-dot" *ngIf="tabsWithErrors['parties']"></span>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="other-details-tab" [class.active]="activeTabId === 'other-details'"
-            (click)="onTabClick($event, 'other-details')" role="tab" aria-controls="other-details"
-            [attr.aria-selected]="activeTabId === 'other-details'">Other Clauses</a>
+          <a class="nav-link" id="other-details-tab"
+             [class.active]="activeTabId === 'other-details'"
+             (click)="onTabClick($event, 'other-details')"
+             role="tab" aria-controls="other-details" [attr.aria-selected]="activeTabId === 'other-details'">
+             Other Clauses
+             <span class="error-dot" *ngIf="tabsWithErrors['other-details']"></span>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="signatory-tab" [class.active]="activeTabId === 'signatory'"
-            (click)="onTabClick($event, 'signatory')" role="tab" aria-controls="signatory"
-            [attr.aria-selected]="activeTabId === 'signatory'">Signature and Miscellaneous Details</a>
+          <a class="nav-link" id="signatory-tab"
+             [class.active]="activeTabId === 'signatory'"
+             (click)="onTabClick($event, 'signatory')"
+             role="tab" aria-controls="signatory" [attr.aria-selected]="activeTabId === 'signatory'">
+             Signature and Miscellaneous Details
+             <span class="error-dot" *ngIf="tabsWithErrors['signatory']"></span>
+          </a>
         </li>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane fade" [class.show]="activeTabId === 'parties'" [class.active]="activeTabId === 'parties'"
-          id="parties" role="tabpanel" aria-labelledby="parties-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'parties'" [class.active]="activeTabId === 'parties'" id="parties" role="tabpanel" aria-labelledby="parties-tab">
           <div class="col-md-6">
             <div class="form-group">
               <label for="contractName" class="form-label">Client Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="contractName" formControlName="contractName"
-                spellcheck="true">
+              <input type="text" class="form-control" id="contractName" formControlName="contractName">
               <div
                 *ngIf="editForm.get('contractName')?.invalid && (editForm.get('contractName')?.dirty || editForm.get('contractName')?.touched)"
                 class="error-message text-danger">
@@ -87,7 +96,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpCname" class="form-label">Entity Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpCname" formControlName="pncdpCname">
                 <div
                   *ngIf="editForm.get('pncdpCname')?.invalid && (editForm.get('pncdpCname')?.dirty || editForm.get('pncdpCname')?.touched)"
                   class="error-message text-danger">
@@ -103,7 +112,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpCadd" class="form-label">Entity Address <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpCadd" formControlName="pncdpCadd">
                 <div
                   *ngIf="editForm.get('pncdpCadd')?.invalid && (editForm.get('pncdpCadd')?.dirty || editForm.get('pncdpCadd')?.touched)"
                   class="error-message text-danger">
@@ -119,7 +128,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpCpan" class="form-label">Entity PAN <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpCpan" formControlName="pncdpCpan">
                 <div
                   *ngIf="editForm.get('pncdpCpan')?.invalid && (editForm.get('pncdpCpan')?.dirty || editForm.get('pncdpCpan')?.touched)"
                   class="error-message text-danger">
@@ -135,7 +144,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpP1" class="form-label">Designated Person 1 <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpP1" formControlName="pncdpP1">
                 <div
                   *ngIf="editForm.get('pncdpP1')?.invalid && (editForm.get('pncdpP1')?.dirty || editForm.get('pncdpP1')?.touched)"
                   class="error-message text-danger">
@@ -150,9 +159,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncdpP1pan" class="form-label">Designated Person 1 PAN <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan" spellcheck="true">
+                <label for="pncdpP1pan" class="form-label">Designated Person 1 PAN <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncdpP1pan" formControlName="pncdpP1pan">
                 <div
                   *ngIf="editForm.get('pncdpP1pan')?.invalid && (editForm.get('pncdpP1pan')?.dirty || editForm.get('pncdpP1pan')?.touched)"
                   class="error-message text-danger">
@@ -168,7 +176,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpP2" class="form-label">Designated Person 2</label>
-                <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpP2" formControlName="pncdpP2">
                 <div
                   *ngIf="editForm.get('pncdpP2')?.invalid && (editForm.get('pncdpP2')?.dirty || editForm.get('pncdpP2')?.touched)"
                   class="error-message text-danger">
@@ -181,7 +189,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncdpP2pan" class="form-label">Designated Person 2 PAN</label>
-                <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan" spellcheck="true">
+                <input type="text" class="form-control" id="pncdpP2pan" formControlName="pncdpP2pan">
                 <div
                   *ngIf="editForm.get('pncdpP2pan')?.invalid && (editForm.get('pncdpP2pan')?.dirty || editForm.get('pncdpP2pan')?.touched)"
                   class="error-message text-danger">
@@ -193,9 +201,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="dpNickName" class="form-label">Entity Represented Name <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="dpNickName" formControlName="dpNickname" spellcheck="true">
+                <label for="dpNickname" class="form-label">Entity Represented Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dpNickname" formControlName="dpNickname">
                 <div
                   *ngIf="editForm.get('dpNickname')?.invalid && (editForm.get('dpNickname')?.dirty || editForm.get('dpNickname')?.touched)"
                   class="error-message text-danger">
@@ -229,7 +236,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpCname" class="form-label">Entity Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpCname" formControlName="pncrpCname">
                 <div
                   *ngIf="editForm.get('pncrpCname')?.invalid && (editForm.get('pncrpCname')?.dirty || editForm.get('pncrpCname')?.touched)"
                   class="error-message text-danger">
@@ -245,7 +252,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpCadd" class="form-label">Entity Address <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpCadd" formControlName="pncrpCadd">
                 <div
                   *ngIf="editForm.get('pncrpCadd')?.invalid && (editForm.get('pncrpCadd')?.dirty || editForm.get('pncrpCadd')?.touched)"
                   class="error-message text-danger">
@@ -261,7 +268,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpCpan" class="form-label">Entity PAN <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpCpan" formControlName="pncrpCpan">
                 <div
                   *ngIf="editForm.get('pncrpCpan')?.invalid && (editForm.get('pncrpCpan')?.dirty || editForm.get('pncrpCpan')?.touched)"
                   class="error-message text-danger">
@@ -277,7 +284,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpP1" class="form-label">Designated Person 1 <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpP1" formControlName="pncrpP1">
                 <div
                   *ngIf="editForm.get('pncrpP1')?.invalid && (editForm.get('pncrpP1')?.dirty || editForm.get('pncrpP1')?.touched)"
                   class="error-message text-danger">
@@ -292,9 +299,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="pncrpP1pan" class="form-label">Designated Person 1 PAN <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan" spellcheck="true">
+                <label for="pncrpP1pan" class="form-label">Designated Person 1 PAN <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pncrpP1pan" formControlName="pncrpP1pan">
                 <div
                   *ngIf="editForm.get('pncrpP1pan')?.invalid && (editForm.get('pncrpP1pan')?.dirty || editForm.get('pncrpP1pan')?.touched)"
                   class="error-message text-danger">
@@ -310,7 +316,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpP2" class="form-label">Designated Person 2</label>
-                <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpP2" formControlName="pncrpP2">
                 <div
                   *ngIf="editForm.get('pncrpP2')?.invalid && (editForm.get('pncrpP2')?.dirty || editForm.get('pncrpP2')?.touched)"
                   class="error-message text-danger">
@@ -323,7 +329,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="pncrpP2pan" class="form-label">Designated Person 2 PAN</label>
-                <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan" spellcheck="true">
+                <input type="text" class="form-control" id="pncrpP2pan" formControlName="pncrpP2pan">
                 <div
                   *ngIf="editForm.get('pncrpP2pan')?.invalid && (editForm.get('pncrpP2pan')?.dirty || editForm.get('pncrpP2pan')?.touched)"
                   class="error-message text-danger">
@@ -335,9 +341,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rpNickName" class="form-label">Entity Represented Name <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="rpNickName" formControlName="rpNickname" spellcheck="true">
+                <label for="rpNickname" class="form-label">Entity Represented Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="rpNickname" formControlName="rpNickname">
                 <div
                   *ngIf="editForm.get('rpNickname')?.invalid && (editForm.get('rpNickname')?.dirty || editForm.get('rpNickname')?.touched)"
                   class="error-message text-danger">
@@ -353,17 +358,14 @@
           </div>
         </div>
 
-        <div class="tab-pane fade" [class.show]="activeTabId === 'other-details'"
-          [class.active]="activeTabId === 'other-details'" id="other-details" role="tabpanel"
-          aria-labelledby="other-details-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'other-details'" [class.active]="activeTabId === 'other-details'" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
 
           <h5 class="form-section-title">Recital Clause</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recRpb" class="form-label">Recipient Party Business <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="recRpb" formControlName="recRpb" spellcheck="true">
+                <label for="recRpb" class="form-label">Recipient Party Business <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="recRpb" formControlName="recRpb">
                 <div
                   *ngIf="editForm.get('recRpb')?.invalid && (editForm.get('recRpb')?.dirty || editForm.get('recRpb')?.touched)"
                   class="error-message text-danger">
@@ -378,9 +380,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="recDpb" class="form-label">Disclosing Party Business <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="recDpb" formControlName="recDpb" spellcheck="true">
+                <label for="recDpb" class="form-label">Disclosing Party Business <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="recDpb" formControlName="recDpb">
                 <div
                   *ngIf="editForm.get('recDpb')?.invalid && (editForm.get('recDpb')?.dirty || editForm.get('recDpb')?.touched)"
                   class="error-message text-danger">
@@ -396,7 +397,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="recBusp" class="form-label">Business Purpose <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="recBusp" formControlName="recBusp" spellcheck="true">
+                <input type="text" class="form-control" id="recBusp" formControlName="recBusp">
                 <div
                   *ngIf="editForm.get('recBusp')?.invalid && (editForm.get('recBusp')?.dirty || editForm.get('recBusp')?.touched)"
                   class="error-message text-danger">
@@ -415,7 +416,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="tcDur" class="form-label">Duration of Term <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="tcDur" formControlName="tcDur" spellcheck="true">
+                <input type="text" class="form-control" id="tcDur" formControlName="tcDur">
                 <div
                   *ngIf="editForm.get('tcDur')?.invalid && (editForm.get('tcDur')?.dirty || editForm.get('tcDur')?.touched)"
                   class="error-message text-danger">
@@ -438,7 +439,8 @@
                   <option value="">Select Here</option>
                   <option *ngFor="let option of rcOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
-                <div *ngIf="editForm.get('rc')?.invalid && (editForm.get('rc')?.dirty || editForm.get('rc')?.touched)"
+                <div
+                  *ngIf="editForm.get('rc')?.invalid && (editForm.get('rc')?.dirty || editForm.get('rc')?.touched)"
                   class="error-message text-danger">
                   Clause Type is required.
                 </div>
@@ -447,7 +449,7 @@
             <div class="col-md-6 disabled" style="display: none;">
               <div class="form-group">
                 <label for="obcBp" class="form-label">OBC BP (remove)</label>
-                <input type="text" class="form-control" id="obcBp" formControlName="obcBp" spellcheck="true">
+                <input type="text" class="form-control" id="obcBp" formControlName="obcBp">
                 <div
                   *ngIf="editForm.get('obcBp')?.invalid && (editForm.get('obcBp')?.dirty || editForm.get('obcBp')?.touched)"
                   class="error-message text-danger">
@@ -467,7 +469,8 @@
                   <option value="">Select Here</option>
                   <option *ngFor="let option of gcOptions" [value]="option.value">{{ option.label }}</option>
                 </select>
-                <div *ngIf="editForm.get('gc')?.invalid && (editForm.get('gc')?.dirty || editForm.get('gc')?.touched)"
+                <div
+                  *ngIf="editForm.get('gc')?.invalid && (editForm.get('gc')?.dirty || editForm.get('gc')?.touched)"
                   class="error-message text-danger">
                   Clause Type is required.
                 </div>
@@ -476,7 +479,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="gcCountry" class="form-label">Governing Country <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="gcCountry" formControlName="gcCountry" spellcheck="true">
+                <input type="text" class="form-control" id="gcCountry" formControlName="gcCountry">
                 <div
                   *ngIf="editForm.get('gcCountry')?.invalid && (editForm.get('gcCountry')?.dirty || editForm.get('gcCountry')?.touched)"
                   class="error-message text-danger">
@@ -492,7 +495,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="gcCity" class="form-label">Governing City <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="gcCity" formControlName="gcCity" spellcheck="true">
+                <input type="text" class="form-control" id="gcCity" formControlName="gcCity">
                 <div
                   *ngIf="editForm.get('gcCity')?.invalid && (editForm.get('gcCity')?.dirty || editForm.get('gcCity')?.touched)"
                   class="error-message text-danger">
@@ -517,14 +520,13 @@
           </div>
         </div>
 
-        <div class="tab-pane fade" [class.show]="activeTabId === 'signatory'"
-          [class.active]="activeTabId === 'signatory'" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
+        <div class="tab-pane fade" [class.show]="activeTabId === 'signatory'" [class.active]="activeTabId === 'signatory'" id="signatory" role="tabpanel" aria-labelledby="signatory-tab">
           <h5 class="form-section-title">Disclosing Party</h5>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sigDPName" class="form-label">Signature Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="sigDPName" formControlName="sigDPName" spellcheck="true">
+                <input type="text" class="form-control" id="sigDPName" formControlName="sigDPName">
                 <div
                   *ngIf="editForm.get('sigDPName')?.invalid && (editForm.get('sigDPName')?.dirty || editForm.get('sigDPName')?.touched)"
                   class="error-message text-danger">
@@ -540,7 +542,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sigDPDes" class="form-label">Designation <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes" spellcheck="true">
+                <input type="text" class="form-control" id="sigDPDes" formControlName="sigDPDes">
                 <div
                   *ngIf="editForm.get('sigDPDes')?.invalid && (editForm.get('sigDPDes')?.dirty || editForm.get('sigDPDes')?.touched)"
                   class="error-message text-danger">
@@ -555,9 +557,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscDPADD" class="form-label">Notice address, email and contact <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD" spellcheck="true">
+                <label for="miscDPADD" class="form-label">Notice address, email and contact <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD">
                 <div
                   *ngIf="editForm.get('miscDPADD')?.invalid && (editForm.get('miscDPADD')?.dirty || editForm.get('miscDPADD')?.touched)"
                   class="error-message text-danger">
@@ -573,7 +574,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="miscDpATT" class="form-label">Notice Attention <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="miscDpATT" formControlName="miscDpATT" spellcheck="true">
+                <input type="text" class="form-control" id="miscDpATT" formControlName="miscDpATT">
                 <div
                   *ngIf="editForm.get('miscDpATT')?.invalid && (editForm.get('miscDpATT')?.dirty || editForm.get('miscDpATT')?.touched)"
                   class="error-message text-danger">
@@ -593,7 +594,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sigRPName" class="form-label">Signature Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="sigRPName" formControlName="sigRPName" spellcheck="true">
+                <input type="text" class="form-control" id="sigRPName" formControlName="sigRPName">
                 <div
                   *ngIf="editForm.get('sigRPName')?.invalid && (editForm.get('sigRPName')?.dirty || editForm.get('sigRPName')?.touched)"
                   class="error-message text-danger">
@@ -609,7 +610,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sigRPDes" class="form-label">Designation <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes" spellcheck="true">
+                <input type="text" class="form-control" id="sigRPDes" formControlName="sigRPDes">
                 <div
                   *ngIf="editForm.get('sigRPDes')?.invalid && (editForm.get('sigRPDes')?.dirty || editForm.get('sigRPDes')?.touched)"
                   class="error-message text-danger">
@@ -624,9 +625,8 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscRPADD" class="form-label">Notice address, email and contact <span
-                    class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD" spellcheck="true">
+                <label for="miscRPADD" class="form-label">Notice address, email and contact <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD">
                 <div
                   *ngIf="editForm.get('miscRPADD')?.invalid && (editForm.get('miscRPADD')?.dirty || editForm.get('miscRPADD')?.touched)"
                   class="error-message text-danger">
@@ -659,10 +659,11 @@
         </div>
       </div>
 
-      <div class="button-group mt-3 gap-2 d-flex">
+      <div class="button-group mt-3 d-flex gap-2">
         <button type="button" class="btn btn-secondary draft-button" (click)="saveToDraft()">Save to Draft</button>
-        <button type="submit" *ngIf="isLastTab(activeTabId)" class="btn btn-primary submit-button"
-          [disabled]="editForm.invalid">Submit</button>
+        <button type="submit" class="btn btn-primary submit-button"  [disabled]="editForm.invalid" *ngIf="isLastTab(activeTabId)">
+          Submit
+        </button>
       </div>
     </form>
   </div>

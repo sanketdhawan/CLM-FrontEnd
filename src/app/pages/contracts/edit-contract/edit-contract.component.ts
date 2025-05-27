@@ -1,11 +1,13 @@
+// edit-contract.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ContractService } from 'src/app/_services/contracts.service';
 import { GlobalAlertService } from 'src/app/_services/global-alert.service';
 import { GlobalLoaderService } from 'src/app/_services/global-loader.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs'; // Import Subscription for managing observables
 
 interface ContractDetails {
   mis01Model: any;
@@ -16,6 +18,8 @@ interface DropdownOption {
   value: string | number;
   label: string;
 }
+
+declare const bootstrap: any; // Declare bootstrap to avoid TypeScript errors if not imported globally
 
 @Component({
   selector: 'app-edit-contract',
@@ -36,9 +40,101 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
   private fb = inject(FormBuilder);
 
   activeTabId: string = 'parties'; // Default active tab
+  tabsWithErrors: { [tabId: string]: boolean } = {}; // Track tabs with errors
 
-  private currentUserInfo: { userId?: string } | null = null;
+  private currentUserInfo: { userId?: string } | null = null; // Assuming you have a way to get user info
   private readonly LOCAL_STORAGE_KEY_PREFIX = 'contractEditTab_';
+  private readonly LOCAL_STORAGE_FORM_STATE_PREFIX = 'contractEditFormState_';
+  private formStatusSubscription!: Subscription; // Subscription to manage form status changes
+
+  invalidFields: string[] = []; // Property to hold names of invalid fields for alert message
+  firstInvalidTab: string = ''; // Property to hold the ID of the first tab with an error
+
+  // Mapping from form control name to display name for user-friendly error messages
+  private fieldDisplayNames: { [key: string]: string } = {
+    contractName: 'Client Name',
+    contractFor: 'Contract For',
+    pncdp: 'Disclosing Party Entity Type',
+    pncrp: 'Recipient Party Entity Type',
+    pncdpCname: 'Disclosing Party Entity Name',
+    pncrpCname: 'Recipient Party Entity Name',
+    pncdpCadd: 'Disclosing Party Entity Address',
+    pncrpCadd: 'Recipient Party Entity Address',
+    pncdpCpan: 'Disclosing Party Entity PAN',
+    pncrpCpan: 'Recipient Party Entity PAN',
+    pncdpP1: 'Disclosing Party Designated Person 1',
+    pncrpP1: 'Recipient Party Designated Person 1',
+    pncdpP1pan: 'Disclosing Party Designated Person 1 PAN',
+    pncrpP1pan: 'Recipient Party Designated Person 1 PAN',
+    pncdpP2: 'Disclosing Party Designated Person 2',
+    pncrpP2: 'Recipient Party Designated Person 2',
+    pncdpP2pan: 'Disclosing Party Designated Person 2 PAN',
+    pncrpP2pan: 'Recipient Party Designated Person 2 PAN',
+    recRpb: 'Recipient Party Business',
+    recDpb: 'Disclosing Party Business',
+    recBusp: 'Business Purpose',
+    tcDur: 'Duration of Term',
+    rc: 'Liability Clause Type',
+    gc: 'Governing Law Clause Type',
+    gcCountry: 'Governing Country',
+    gcCity: 'Governing City',
+    nsc: 'Non-Solicitation Clause', // Added for completeness, though it's a checkbox
+    sigDPName: 'Disclosing Party Signature Name',
+    sigRPName: 'Recipient Party Signature Name',
+    sigDPDes: 'Disclosing Party Designation',
+    sigRPDes: 'Recipient Party Designation',
+    miscDPADD: 'Disclosing Party Notice Address, Email and Contact',
+    miscRPADD: 'Recipient Party Notice Address, Email and Contact',
+    miscDpATT: 'Disclosing Party Notice Attention',
+    miscRPATT: 'Recipient Party Notice Attention',
+    dpNickname: 'Disclosing Party Entity Represented Name',
+    rpNickname: 'Recipient Party Entity Represented Name',
+    obcBp: 'OBC Business Purpose'
+  };
+
+  // Mapping from form control name to the tab ID it belongs to
+  private fieldToTabMap: { [key: string]: string } = {
+    contractName: 'parties',
+    contractFor: 'parties',
+    pncdp: 'parties',
+    pncrp: 'parties',
+    pncdpCname: 'parties',
+    pncrpCname: 'parties',
+    pncdpCadd: 'parties',
+    pncrpCadd: 'parties',
+    pncdpCpan: 'parties',
+    pncrpCpan: 'parties',
+    pncdpP1: 'parties',
+    pncrpP1: 'parties',
+    pncdpP1pan: 'parties',
+    pncrpP1pan: 'parties',
+    pncdpP2: 'parties',
+    pncrpP2: 'parties',
+    pncdpP2pan: 'parties',
+    pncrpP2pan: 'parties',
+    dpNickname: 'parties',
+    rpNickname: 'parties',
+
+    recRpb: 'other-details',
+    recDpb: 'other-details',
+    recBusp: 'other-details',
+    tcDur: 'other-details',
+    obcBp: 'other-details', // Ensure this is mapped
+    rc: 'other-details',
+    nsc: 'other-details',
+    gc: 'other-details',
+    gcCountry: 'other-details',
+    gcCity: 'other-details',
+
+    sigDPName: 'signatory',
+    sigRPName: 'signatory',
+    sigDPDes: 'signatory',
+    sigRPDes: 'signatory',
+    miscDPADD: 'signatory',
+    miscRPADD: 'signatory',
+    miscDpATT: 'signatory',
+    miscRPATT: 'signatory',
+  };
 
   contractForOptions: DropdownOption[] = [
     { value: '1', label: 'Mutual NDA' },
@@ -75,15 +171,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   ngOnInit(): void {
-    try {
-      const userInfoString = localStorage.getItem('userinfo');
-      if (userInfoString) {
-        this.currentUserInfo = JSON.parse(userInfoString);
-      }
-    } catch (e) {
-      console.error('Error parsing userinfo from localStorage', e);
-      this.currentUserInfo = null;
-    }
+    // Dummy user info for local storage key. Replace with actual user service.
+    this.currentUserInfo = { userId: 'current_user' };
 
     this.route.paramMap.subscribe((params) => {
       this.contractId = params.get('id');
@@ -136,17 +225,101 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       rpNickname: ['', [Validators.required, Validators.minLength(3)]],
     });
 
-    this.activeTabId = this.loadActiveTab();
+    this.loadActiveTabState(); // Load previously active tab
+    this.loadFormState(); // Load saved form state
+
+    // Subscribe to form status changes to update error dots in real-time
+    this.formStatusSubscription = this.editForm.statusChanges.subscribe(() => {
+      this.updateTabErrorStatus();
+    });
+
+    // Initial check for errors after form is initialized (and potentially populated)
+    this.updateTabErrorStatus();
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.activateTab(this.activeTabId);
-    }, 0);
+    this.initBootstrapTabs();
   }
 
   ngOnDestroy(): void {
-    // Cleanup logic if needed
+    // Unsubscribe to prevent memory leaks
+    if (this.formStatusSubscription) {
+      this.formStatusSubscription.unsubscribe();
+    }
+    // Save active tab state if user info is available
+    if (this.currentUserInfo?.userId) {
+      localStorage.setItem(
+        `${this.LOCAL_STORAGE_KEY_PREFIX}${this.currentUserInfo.userId}`,
+        this.activeTabId
+      );
+    }
+    // Save form state when component is destroyed
+    if (this.editForm.dirty) {
+      this.saveFormState();
+    }
+  }
+
+  private saveFormState(): void {
+    if (this.contractId && this.currentUserInfo?.userId) {
+      const formState = JSON.stringify(this.editForm.value);
+      localStorage.setItem(
+        `${this.LOCAL_STORAGE_FORM_STATE_PREFIX}${this.currentUserInfo.userId}_${this.contractId}`,
+        formState
+      );
+    }
+  }
+
+  private loadFormState(): void {
+    if (this.contractId && this.currentUserInfo?.userId) {
+      const savedState = localStorage.getItem(
+        `${this.LOCAL_STORAGE_FORM_STATE_PREFIX}${this.currentUserInfo.userId}_${this.contractId}`
+      );
+      if (savedState) {
+        const formValue = JSON.parse(savedState);
+        this.editForm.patchValue(formValue);
+        // Mark fields as touched/dirty if they were saved, to show validation errors on load if any.
+        this.editForm.markAllAsTouched();
+        this.updateTabErrorStatus(); // Update tab error status after loading state
+      }
+    }
+  }
+
+  private loadActiveTabState(): void {
+    if (this.currentUserInfo?.userId) {
+      const savedTab = localStorage.getItem(
+        `${this.LOCAL_STORAGE_KEY_PREFIX}${this.currentUserInfo.userId}`
+      );
+      if (savedTab) {
+        this.activeTabId = savedTab;
+      }
+    }
+  }
+
+  // Modified onTabClick to handle tab activation and error status update
+  onTabClick($event: Event, tabId: string): void {
+    $event.preventDefault(); // Prevent default anchor behavior
+    this.activeTabId = tabId;
+    if (this.currentUserInfo?.userId) {
+      localStorage.setItem(
+        `${this.LOCAL_STORAGE_KEY_PREFIX}${this.currentUserInfo.userId}`,
+        tabId
+      );
+    }
+    // Manually activate Bootstrap tab
+    const tabEl = document.querySelector(`#${this.activeTabId}-tab`);
+    if (tabEl) {
+      const tab = new bootstrap.Tab(tabEl);
+      tab.show();
+    }
+    this.updateTabErrorStatus(); // Update status when tab changes
+  }
+
+  private initBootstrapTabs(): void {
+    const tabEl = document.querySelector(`#${this.activeTabId}-tab`);
+    if (tabEl) {
+      const tab = new bootstrap.Tab(tabEl);
+      tab.show();
+    }
   }
 
   loadContractDetails(id: string): void {
@@ -158,6 +331,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         if (data && data.mis01Model) {
           this.contractDetails = data;
           this.populateForm(data.mis01Model);
+          // After populating, update the error status
+          this.updateTabErrorStatus();
         } else {
           this.globalAlertService.setMessage('Contract details could not be loaded or were empty.', 'danger');
           this.contractNotFound = true;
@@ -179,9 +354,35 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       nsc: model.nsc === 1 ? true : false,
       dpNickname: model.dpNickName || '',
       rpNickname: model.rpNickName || '',
-      miscDpATT: model.miscDpATT || model.miscDPATT || model.miscDpAtt || ''
+      miscDpATT: model.miscDpATT || model.miscDPATT || model.miscDpAtt || '',
     };
     this.editForm.patchValue(formValue);
+    // Mark fields as touched after populating to immediately show errors if any
+    this.editForm.markAllAsTouched();
+    this.updateTabErrorStatus(); // Update tab error status after populating
+  }
+
+  // New method to update the error status of tabs
+  private updateTabErrorStatus(): void {
+    // Reset all tab error statuses
+    ['parties', 'other-details', 'signatory'].forEach(tabId => {
+      this.tabsWithErrors[tabId] = false;
+    });
+
+    // Iterate through form controls and set tab error status
+    for (const controlName in this.editForm.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.editForm.controls, controlName)) {
+        const control = this.editForm.get(controlName);
+        const tabId = this.fieldToTabMap[controlName];
+
+        if (control && tabId) {
+          // Check if control is invalid and either dirty or touched
+          if (control.invalid && (control.dirty || control.touched)) {
+            this.tabsWithErrors[tabId] = true;
+          }
+        }
+      }
+    }
   }
 
   private cleanFormData(formData: any): any {
@@ -202,11 +403,14 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     cleanedData['rpNickName'] = formData.rpNickname;
     delete cleanedData['dpNickname'];
     delete cleanedData['rpNickname'];
-
     return cleanedData;
   }
 
   saveToDraft(): void {
+    // Mark all fields as touched to trigger validation and update error dots
+    this.editForm.markAllAsTouched();
+    this.updateTabErrorStatus();
+
     if (this.contractId && !this.contractNotFound) {
       this.globalLoaderService.showLoader();
       const rawFormData = this.editForm.value;
@@ -220,11 +424,14 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage('Contract details saved to draft.', 'success');
+          this.editForm.markAsPristine(); // Mark form as pristine after saving
+          this.updateTabErrorStatus(); // Update error dots after save
         },
         error: (error) => {
           console.error('Error saving contract to draft:', error);
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage('Error saving contract to draft.', 'danger');
+          this.updateTabErrorStatus(); // Update error dots if save fails
         },
       });
     } else if (this.contractNotFound) {
@@ -235,7 +442,9 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(): void {
+    // Mark all fields as touched to trigger validation and update error dots
     this.editForm.markAllAsTouched();
+    this.updateTabErrorStatus();
 
     if (this.editForm.valid && this.contractId && !this.contractNotFound) {
       this.globalLoaderService.showLoader();
@@ -250,68 +459,77 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage(response.message || 'Contract submitted successfully.', 'success');
-          this.router.navigate(['/contracts/closed']);
+          this.router.navigate(['/contracts/closed']); // Redirect on success
         },
         error: (error) => {
           console.error('Error submitting contract details:', error);
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage(error.message || 'Error submitting contract details.', 'danger');
+          // If submission fails, update error dots
+          this.updateTabErrorStatus();
         },
       });
     } else if (this.contractNotFound) {
       this.globalAlertService.setMessage('Cannot submit: No contract found with this ID.', 'danger');
     } else {
-      this.globalAlertService.setMessage('Please correct the form errors before submitting.', 'danger');
-    }
-  }
+      // Show specific invalid fields in the alert message, maintaining the original sorting logic if any
+      this.getInvalidAndRequiredFields();
+      const invalidFieldNames = this.invalidFields.map(field => this.fieldDisplayNames[field] || field);
+      let errorMessage = 'Please correct the form errors before submitting.';
+      if (invalidFieldNames.length > 0) {
+        errorMessage += ` Invalid fields: ${invalidFieldNames.join(', ')}.`;
+      }
+      this.globalAlertService.setMessage(errorMessage, 'danger');
 
-  isLastTab(tabId: string): boolean {
-    return tabId === 'signatory';
-  }
-
-  onTabClick(event: Event, tabId: string): void {
-    event.preventDefault();
-    this.activeTabId = tabId;
-    this.saveActiveTab(tabId);
-    this.activateTab(tabId);
-  }
-
-  private saveActiveTab(tabId: string): void {
-    if (this.currentUserInfo?.userId) {
-      localStorage.setItem(this.LOCAL_STORAGE_KEY_PREFIX + this.currentUserInfo.userId, tabId);
-    } else {
-      localStorage.setItem(this.LOCAL_STORAGE_KEY_PREFIX + 'guest', tabId);
-    }
-  }
-
-  private loadActiveTab(): string {
-    let storedTabId: string | null = null;
-    if (this.currentUserInfo?.userId) {
-      storedTabId = localStorage.getItem(this.LOCAL_STORAGE_KEY_PREFIX + this.currentUserInfo.userId);
-    } else {
-      storedTabId = localStorage.getItem(this.LOCAL_STORAGE_KEY_PREFIX + 'guest');
-    }
-    return storedTabId || 'parties';
-  }
-
-  private activateTab(tabId: string): void {
-    const tabElement = document.querySelector(`a[href="#${tabId}"]`) as HTMLElement;
-    if (tabElement) {
-      // Ensure Bootstrap JS is loaded and accessible
-      const bsTab = (window as any).bootstrap?.Tab;
-      if (bsTab) {
-        new bsTab(tabElement).show();
-      } else {
-        console.warn('Bootstrap Tab JavaScript not found. Manual tab activation might not work as expected.');
-        // Fallback for visual active state if Bootstrap JS isn't loaded
-        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'show'));
-        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
-        tabElement.classList.add('active', 'show');
-        const targetPane = document.getElementById(tabId);
-        if (targetPane) {
-          targetPane.classList.add('active', 'show');
-        }
+      // If the first invalid tab is identified, switch to it
+      if (this.firstInvalidTab && this.activeTabId !== this.firstInvalidTab) {
+        this.onTabClick(new Event('click'), this.firstInvalidTab); // Simulate a click to switch tab
       }
     }
+  }
+
+  // Method to get invalid and required fields for alert message and identify the first invalid tab
+  getInvalidAndRequiredFields(): void {
+    this.invalidFields = [];
+    this.firstInvalidTab = '';
+
+    // Define the order of tabs for priority
+    const tabOrder = ['parties', 'other-details', 'signatory'];
+
+    // Temporary list to store invalid controls with their tab info, before sorting
+    const tempInvalidControls: { controlName: string, tabId: string, order: number }[] = [];
+
+    Object.keys(this.editForm.controls).forEach(key => {
+      const control = this.editForm.get(key);
+      if (control) {
+        // Check if control is required AND invalid AND has been interacted with
+        if (control.invalid && (control.dirty || control.touched)) {
+          const tabId = this.fieldToTabMap[key];
+          if (tabId) {
+            tempInvalidControls.push({
+              controlName: key,
+              tabId: tabId,
+              order: tabOrder.indexOf(tabId) // Get the order of the tab
+            });
+          }
+        }
+      }
+    });
+
+    // Sort invalid controls by their tab order
+    tempInvalidControls.sort((a, b) => a.order - b.order);
+
+    // Populate invalidFields and set firstInvalidTab based on sorted order
+    for (const item of tempInvalidControls) {
+      this.invalidFields.push(this.fieldDisplayNames[item.controlName] || item.controlName);
+      if (!this.firstInvalidTab) {
+        this.firstInvalidTab = item.tabId; // Set the first invalid tab encountered
+      }
+    }
+  }
+
+  // This method checks if the current tab is the last tab (for conditional submit button display)
+  isLastTab(tabId: string): boolean {
+    return tabId === 'signatory'; // Assuming 'signatory' is your last tab
   }
 }
