@@ -50,6 +50,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
   invalidFields: string[] = []; // Property to hold names of invalid fields for alert message
   firstInvalidTab: string = ''; // Property to hold the ID of the first tab with an error
 
+  formSubmitted: boolean = false; // Flag to track form submission
+
   // Mapping from form control name to display name for user-friendly error messages
   private fieldDisplayNames: { [key: string]: string } = {
     contractName: 'Client Name',
@@ -89,7 +91,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     miscRPATT: 'Recipient Party Notice Attention',
     dpNickname: 'Disclosing Party Entity Represented Name',
     rpNickname: 'Recipient Party Entity Represented Name',
-    obcBp: 'OBC Business Purpose'
+    obcBp: 'OBC Business Purpose',
+    eDate: 'Effective Date' // Added eDate display name
   };
 
   // Mapping from form control name to the tab ID it belongs to
@@ -115,6 +118,7 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     dpNickname: 'parties',
     rpNickname: 'parties',
 
+    eDate: 'other-details', // Added eDate to the other-details tab
     recRpb: 'other-details',
     recDpb: 'other-details',
     recBusp: 'other-details',
@@ -188,6 +192,7 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       contractName: ['', [Validators.required, Validators.minLength(3)]],
       contractFor: ['', Validators.required],
       pncdp: ['', Validators.required],
+      eDate: [''], // Added eDate field here
       pncrp: ['', Validators.required],
       pncdpCname: ['', [Validators.required, Validators.minLength(3)]],
       pncrpCname: ['', [Validators.required, Validators.minLength(3)]],
@@ -229,12 +234,15 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadFormState(); // Load saved form state
 
     // Subscribe to form status changes to update error dots in real-time
+    // Only update if form has been submitted
     this.formStatusSubscription = this.editForm.statusChanges.subscribe(() => {
-      this.updateTabErrorStatus();
+      if (this.formSubmitted) { // Only update if form has been submitted
+        this.updateTabErrorStatus();
+      }
     });
 
     // Initial check for errors after form is initialized (and potentially populated)
-    this.updateTabErrorStatus();
+    // No initial call to updateTabErrorStatus here, as we want it only on submit
   }
 
   ngAfterViewInit(): void {
@@ -277,9 +285,9 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       if (savedState) {
         const formValue = JSON.parse(savedState);
         this.editForm.patchValue(formValue);
-        // Mark fields as touched/dirty if they were saved, to show validation errors on load if any.
-        this.editForm.markAllAsTouched();
-        this.updateTabErrorStatus(); // Update tab error status after loading state
+        // Do NOT mark all as touched here, only mark after submission
+        // this.editForm.markAllAsTouched();
+        // this.updateTabErrorStatus(); // Update tab error status after loading state
       }
     }
   }
@@ -311,7 +319,9 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       const tab = new bootstrap.Tab(tabEl);
       tab.show();
     }
-    this.updateTabErrorStatus(); // Update status when tab changes
+    if (this.formSubmitted) { // Only update status if form has been submitted
+      this.updateTabErrorStatus();
+    }
   }
 
   private initBootstrapTabs(): void {
@@ -331,8 +341,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         if (data && data.mis01Model) {
           this.contractDetails = data;
           this.populateForm(data.mis01Model);
-          // After populating, update the error status
-          this.updateTabErrorStatus();
+          // After populating, do NOT update the error status immediately
+          // this.updateTabErrorStatus();
         } else {
           this.globalAlertService.setMessage('Contract details could not be loaded or were empty.', 'danger');
           this.contractNotFound = true;
@@ -355,11 +365,12 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
       dpNickname: model.dpNickName || '',
       rpNickname: model.rpNickName || '',
       miscDpATT: model.miscDpATT || model.miscDPATT || model.miscDpAtt || '',
+      eDate: model.eDate || '' // Added eDate population
     };
     this.editForm.patchValue(formValue);
-    // Mark fields as touched after populating to immediately show errors if any
-    this.editForm.markAllAsTouched();
-    this.updateTabErrorStatus(); // Update tab error status after populating
+    // Do NOT mark fields as touched after populating
+    // this.editForm.markAllAsTouched();
+    // this.updateTabErrorStatus(); // Update tab error status after populating
   }
 
   // New method to update the error status of tabs
@@ -376,8 +387,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         const tabId = this.fieldToTabMap[controlName];
 
         if (control && tabId) {
-          // Check if control is invalid and either dirty or touched
-          if (control.invalid && (control.dirty || control.touched)) {
+          // Check if control is invalid and (if form has been submitted, check touched/dirty)
+          if (control.invalid && this.formSubmitted) { // Only show errors if form has been submitted
             this.tabsWithErrors[tabId] = true;
           }
         }
@@ -401,16 +412,16 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     cleanedData['dpNickName'] = formData.dpNickname;
     cleanedData['rpNickName'] = formData.rpNickname;
+    // For eDate, if it's an empty string, convert it to null for the API if necessary,
+    // but the provided JSON shows null directly, so we can keep it as is if API expects "" for empty.
+    // If the API expects null for empty date, uncomment the line below.
+    // cleanedData['eDate'] = formData.eDate === '' ? null : formData.eDate;
     delete cleanedData['dpNickname'];
     delete cleanedData['rpNickname'];
     return cleanedData;
   }
 
   saveToDraft(): void {
-    // Mark all fields as touched to trigger validation and update error dots
-    this.editForm.markAllAsTouched();
-    this.updateTabErrorStatus();
-
     if (this.contractId && !this.contractNotFound) {
       this.globalLoaderService.showLoader();
       const rawFormData = this.editForm.value;
@@ -424,14 +435,15 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage('Contract details saved to draft.', 'success');
-          this.editForm.markAsPristine(); // Mark form as pristine after saving
-          this.updateTabErrorStatus(); // Update error dots after save
+          this.editForm.markAsPristine(); // Mark form as pristine
+          this.editForm.markAsUntouched(); // Mark all controls as untouched to clear validation styles
+          this.formSubmitted = false; // Reset form submission flag to hide tab error dots
+          this.updateTabErrorStatus(); // Update tab error status to ensure dots are cleared
         },
         error: (error) => {
           console.error('Error saving contract to draft:', error);
           this.globalLoaderService.hideLoader();
           this.globalAlertService.setMessage('Error saving contract to draft.', 'danger');
-          this.updateTabErrorStatus(); // Update error dots if save fails
         },
       });
     } else if (this.contractNotFound) {
@@ -442,6 +454,7 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(): void {
+    this.formSubmitted = true; // Set flag to true on submit
     // Mark all fields as touched to trigger validation and update error dots
     this.editForm.markAllAsTouched();
     this.updateTabErrorStatus();
@@ -472,12 +485,17 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.contractNotFound) {
       this.globalAlertService.setMessage('Cannot submit: No contract found with this ID.', 'danger');
     } else {
-      // Show specific invalid fields in the alert message, maintaining the original sorting logic if any
+      // Show specific invalid fields in the alert message
       this.getInvalidAndRequiredFields();
-      const invalidFieldNames = this.invalidFields.map(field => this.fieldDisplayNames[field] || field);
+      const invalidFieldNames = this.invalidFields;
       let errorMessage = 'Please correct the form errors before submitting.';
       if (invalidFieldNames.length > 0) {
-        errorMessage += ` Invalid fields: ${invalidFieldNames.join(', ')}.`;
+        // Construct an HTML unordered list for the invalid fields.
+        // NOTE: This will only render as an actual HTML list if the GlobalAlertService
+        // and the component displaying it are configured to render HTML (e.g., using [innerHTML]).
+        // If not, the <ul> and <li> tags will appear as plain text in the alert message.
+        const invalidFieldsHtmlList = invalidFieldNames.map(field => `<li>${field}</li>`).join('');
+        errorMessage += `\n\nInvalid fields:\n<ul>${invalidFieldsHtmlList}</ul>`;
       }
       this.globalAlertService.setMessage(errorMessage, 'danger');
 
@@ -502,8 +520,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     Object.keys(this.editForm.controls).forEach(key => {
       const control = this.editForm.get(key);
       if (control) {
-        // Check if control is required AND invalid AND has been interacted with
-        if (control.invalid && (control.dirty || control.touched)) {
+        // Only consider invalid controls after form submission
+        if (control.invalid && this.formSubmitted) { // Ensure this aligns with showing errors on submit
           const tabId = this.fieldToTabMap[key];
           if (tabId) {
             tempInvalidControls.push({
