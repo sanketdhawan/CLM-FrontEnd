@@ -202,16 +202,16 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="dpNickname" class="form-label">Entity Represented Name <span class="text-danger">*</span></label>
+                <label for="dpNickname" class="form-label">Entity Abbreviation <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="dpNickname" formControlName="dpNickname">
                 <div
                   *ngIf="editForm.get('dpNickname')?.invalid && (editForm.get('dpNickname')?.dirty || editForm.get('dpNickname')?.touched)"
                   class="error-message text-danger">
                   <span *ngIf="editForm.get('dpNickname')?.errors?.['required']">
-                    Entity Represented Name is required.
+                    Entity Abbreviation is required.
                   </span>
                   <span *ngIf="editForm.get('dpNickname')?.errors?.['minlength']">
-                    Entity Represented Name must be at least 3 characters long.
+                    Entity Abbreviation must be at least 3 characters long.
                   </span>
                 </div>
               </div>
@@ -342,16 +342,16 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="rpNickname" class="form-label">Entity Represented Name <span class="text-danger">*</span></label>
+                <label for="rpNickname" class="form-label">Entity Abbreviation <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="rpNickname" formControlName="rpNickname">
                 <div
                   *ngIf="editForm.get('rpNickname')?.invalid && (editForm.get('rpNickname')?.dirty || editForm.get('rpNickname')?.touched)"
                   class="error-message text-danger">
                   <span *ngIf="editForm.get('rpNickname')?.errors?.['required']">
-                    Entity Represented Name is required.
+                    Entity Abbreviation is required.
                   </span>
                   <span *ngIf="editForm.get('rpNickname')?.errors?.['minlength']">
-                    Entity Represented Name must be at least 3 characters long.
+                    Entity Abbreviation must be at least 3 characters long.
                   </span>
                 </div>
               </div>
@@ -564,16 +564,16 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscDPADD" class="form-label">Notice address, email and contact <span class="text-danger">*</span></label>
+                <label for="miscDPADD" class="form-label">Notice Address, Email and Contact <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="miscDPADD" formControlName="miscDPADD">
                 <div
                   *ngIf="editForm.get('miscDPADD')?.invalid && (editForm.get('miscDPADD')?.dirty || editForm.get('miscDPADD')?.touched)"
                   class="error-message text-danger">
                   <span *ngIf="editForm.get('miscDPADD')?.errors?.['required']">
-                    Notice address, email and contact is required.
+                    Notice Address, Email and Contact is required.
                   </span>
                   <span *ngIf="editForm.get('miscDPADD')?.errors?.['minlength']">
-                    Notice address, email and contact must be at least 3 characters long.
+                    Notice Address, Email and Contact must be at least 3 characters long.
                   </span>
                 </div>
               </div>
@@ -632,16 +632,16 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="miscRPADD" class="form-label">Notice address, email and contact <span class="text-danger">*</span></label>
+                <label for="miscRPADD" class="form-label">Notice Address, Email and Contact <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="miscRPADD" formControlName="miscRPADD">
                 <div
                   *ngIf="editForm.get('miscRPADD')?.invalid && (editForm.get('miscRPADD')?.dirty || editForm.get('miscRPADD')?.touched)"
                   class="error-message text-danger">
                   <span *ngIf="editForm.get('miscRPADD')?.errors?.['required']">
-                    Notice address, email and contact is required.
+                    Notice Address, Email and Contact is required.
                   </span>
                   <span *ngIf="editForm.get('miscRPADD')?.errors?.['minlength']">
-                    Notice address, email and contact must be at least 3 characters long.
+                    Notice Address, Email and Contact must be at least 3 characters long.
                   </span>
                 </div>
               </div>

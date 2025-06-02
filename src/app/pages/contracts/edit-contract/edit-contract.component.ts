@@ -89,8 +89,8 @@ export class EditContractComponent implements OnInit, OnDestroy, AfterViewInit {
     miscRPADD: 'Recipient Party Notice Address, Email and Contact',
     miscDpATT: 'Disclosing Party Notice Attention',
     miscRPATT: 'Recipient Party Notice Attention',
-    dpNickname: 'Disclosing Party Entity Represented Name',
-    rpNickname: 'Recipient Party Entity Represented Name',
+    dpNickname: 'Disclosing Party Entity Abbreviation',
+    rpNickname: 'Recipient Party Entity Abbreviation',
     obcBp: 'OBC Business Purpose',
     eDate: 'Effective Date' // Added eDate display name
   };
